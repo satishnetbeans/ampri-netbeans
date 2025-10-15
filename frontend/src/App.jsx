@@ -1,7 +1,17 @@
 // App.jsx
 // @ts-nocheck
 import { useEffect, useState } from 'react';
-import { Routes, Route } from "react-router-dom";
+
+import { useUserDevice } from './context/UserDeviceContext.jsx';
+import { useSiteData } from './context/siteDataContext.jsx';
+import { useUserData } from './context/UserDataContext.jsx';
+
+import StructureRoleRoute from './utils/StructureRoleRoute.js';
+
+import { Routes, Route, useLocation } from "react-router-dom";
+
+
+import { checkAdmin } from './api/axiosAPIs.js';
 
 import HomePage from "./pages/HomePage";
 import AdminLogin from "./pages/Admin/AdminLoginPage.jsx";
@@ -60,7 +70,12 @@ import Administration from './pages/services/Administration.JSX';
 
 import TenderPage from './pages/TenderPage.jsx';
 import DirectoryPage from './pages/DirectoryPage.jsx';
-import GalleryPage from './pages/GalleryPage.jsx';
+
+// gallery
+import GalleryPage from './pages/gallery/PhotoGalleryPage.jsx';
+import VideoGalleryPage from './pages/gallery/VideoGalleryPage.jsx';
+
+import AdminDashboard from './pages/Admin/admin Dashboard/AdminDashboard.jsx';
 
 import {
   fetchUploads,
@@ -68,12 +83,34 @@ import {
   fetchNews,
   fetchnotification,
   fetchVisionMandate,  // 👈 import it
-  fetchDivisionPages
+  fetchDivisionPages,
+  fetchSiteData
 } from "./api/axios.js";
 
-import api from "./api/axios.js";
+import checkBaseURL from './utils/CheckBaseUrl.js';
 
 function App() {
+  const CheckBaseURL = checkBaseURL()
+  const currentURL = useLocation();
+
+  const [Role, setRole] = useState(null);
+
+  const { updateUserDevice } = useUserDevice();
+  const { updateUserData, UserData } = useUserData();
+  const { updateSiteData } = useSiteData();
+
+
+  console.log("baseeeeeeeeeee : ", CheckBaseURL)
+  console.log("UserDataaaaaaa & role : ", UserData, Role)
+
+  useEffect(() => {
+    if (UserData && UserData.role) {
+      const role = StructureRoleRoute(UserData)
+      setRole(role)
+    }
+  }, [UserData])
+
+
   const [uploads, setUploads] = useState([]);
   const [banner, setBanner] = useState([]);
   const [facility, setFacility] = useState([]);
@@ -91,27 +128,29 @@ function App() {
 
   const [isAdmin, setIsAdmin] = useState(false);
 
+
+
   const [divisionPages, setdivisionPages] = useState([]);
 
-  console.log("divisionPages : ", divisionPages)
 
   useEffect(() => {
     const fetchAllData = async () => {
       try {
-        const [uploadsRes, directorRes, newsRes, notificationRes, visionRes, divisionPagesRes] = await Promise.all([
+        const [uploadsRes, directorRes, newsRes, notificationRes, visionRes, divisionPagesRes, sitedataRes] = await Promise.all([
           fetchUploads(),
           fetchDirector(),
           fetchNews(),
           fetchnotification(),
           fetchVisionMandate(),  // 👈 fetch vision/mandate
-          fetchDivisionPages()
+          fetchDivisionPages(),
+          fetchSiteData()
         ]);
 
         if (uploadsRes.data) {
           const data = uploadsRes.data.map(item => ({
             ...item,
             fileUrl: item.fileUrl.startsWith("uploads/")
-              ? `http://localhost:3000/${item.fileUrl}`
+              ? `${CheckBaseURL}/${item.fileUrl}`
               : item.fileUrl
           }));
 
@@ -130,144 +169,240 @@ function App() {
         if (visionRes.data) setVisionMandate(visionRes.data); // 👈 store in state
         if (divisionPagesRes.data) setdivisionPages(divisionPagesRes.data);
 
+        if (sitedataRes.data) {
+          let data = sitedataRes.data
+          data.lastModified = new Date(data.lastModified).toLocaleString()
+
+          updateSiteData(data);
+        }
+
       } catch (err) {
         console.error("Error fetching data:", err);
       }
     };
 
-    const checkAdmin = async () => {
-      try {
-        const res = await api.get("/admin/check-auth");
-        if (res.data.isAdmin) {
-          setIsAdmin(true);
-        }
-      } catch {
-        setIsAdmin(false);
+
+    const verifyAdmin = async () => {
+      console.log("currentURL : ", currentURL)
+      let userVisited = false
+      if (currentURL.pathname === "/") {
+        userVisited = true
       }
-    };
+      const res = await checkAdmin(userVisited);
+      console.log("checkUser : ", res)
+      const { isAdmin, user, deviceInfo } = res
+      setIsAdmin(isAdmin);
+      updateUserDevice(deviceInfo)
+      updateUserData(user)
+    }
+    verifyAdmin();
 
     fetchAllData();
-    checkAdmin();
+
   }, []);
 
   return (
     <>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <HomePage
-              uploads={uploads}
-              banner={banner}
-              facility={facility}
-              recentDevelopments={recentDevelopments}
-              foundationDay={foundationDay}
-              printMedia={printMedia}
-              updates={updates}
-              director={director}
-              notifications={notifications}
-              news={news}
-              visionMandate={visionMandate}   // 👈 pass to homepage
-              isAdmin={isAdmin}
-            />
-          }
-        />
-        
-        {/* topbar routes */}
-        <Route path="/events" element={<EventsPage isAdmin={isAdmin} />} />
-        <Route path="/career" element={<CareerPage isAdmin={isAdmin} />} />
-        <Route path="/RTI" element={<RTIPage isAdmin={isAdmin} />} />
-        <Route path="/officeMemorandum" element={<OfficeMemorandumPage isAdmin={isAdmin} />} />
-        <Route path="/SRA" element={<ScreenReaderAccess isAdmin={isAdmin} />} />
+      {
+        Role ?
+          <Routes>
 
-        {/* about pages */}
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/about/Organization" element={<Organisation />} />
-        <Route path="/about/research-council" element={<ResearchCouncil />} />
-        <Route path="/about/management-council" element={<ManagementCouncilPage />} />
-        <Route path="/about/staff-page" element={<StaffPage />} />
-        <Route path="/about/former-directors" element={<FormerDirectorsPage />} />
-
-        {/* research pages */}
-        <Route path="/research/LWMD" element={<LightWeightMaterials isAdmin={isAdmin} />} />
-        <Route path="/research/FMCD" element={<FunctionalMaterialsComposites isAdmin={isAdmin} />} />
-        <Route path="/research/SCMD" element={<SustainableConstructionMaterials isAdmin={isAdmin} />} />
-        <Route path="/research/EESD" element={<EnergyEnvironmentalSolutions isAdmin={isAdmin} />} />
-        <Route path="/research/IMDD" element={<IntelligentMaterialsDevices isAdmin={isAdmin} />} />
-        <Route path="/research/IMPD" element={<InnovativeMaterialsProcesses isAdmin={isAdmin} />} />
-
-        <Route path="/csr" element={<CSR />} />
-
-        {/* r&d pages */}
-        <Route path="/r&d-Management" element={<RnDPage />} />
-        <Route path="/r&d-Management/Technology-Knowhow" element={<TechnologyKnowhowPage />} />
-        <Route path="/r&d-Management/MOU" element={<MouPage />} />
-
-        <Route path="/tender" element={<TenderPage />} />
-
-        <Route path="/adminLogin" element={<AdminLogin />} />
-
-        <Route path="/directory" element={<DirectoryPage />} />
-
-        <Route path="/gallery" element={<GalleryPage />} />
-
-        {/* services pages */}
-        <Route path="/services/HR" element={<HumanResourcePage />} />
-        <Route path="/services/ISTAG" element={<ISTAG />} />
-        <Route path="/services/Dispensary" element={<Dispensary />} />
-        <Route path="/services/guest-house" element={<GuestHouse />} />
-        <Route path="/services/rajbhasha-cell" element={<RajbhashaCell />} />
-        <Route path="/services/director-secretariat" element={<DirectorSecretariat />} />
-        <Route path="/services/administration" element={<Administration />} />
-        <Route path="/services/Workshop" element={<Workshop />} />
-        <Route path="/services/engineering-services" element={<EngineeringServices />} />
-
-
-        <Route
-          path="/admin"
-          element={
-            <HomePage
-              uploads={uploads}
-              banner={banner}
-              facility={facility}
-              recentDevelopments={recentDevelopments}
-              foundationDay={foundationDay}
-              printMedia={printMedia}
-              updates={updates}
-              director={director}
-              notifications={notifications}
-              news={news}
-              visionMandate={visionMandate}  // 👈 also here
-              isAdmin={isAdmin}
-            />
-          }
-        />
-
-        <Route path="admin/edituploads/:section" element={<EditSectionPage sectionUploads={uploads} />} />
-        <Route path="/admin/editdirector" element={<EditDirectorPage director={director} />} />
-        <Route path="/admin/editnews" element={<EditNewsPage news={news} />} />
-        <Route path="/admin/editnotification" element={<EditNotificationPage notifications={notifications} />} />
-        <Route
-          path="/admin/editvision"
-          element={<EditVisionMandatePage visionMandate={visionMandate} />}
-        />
-
-        <Route path="/division" element={<DemoDivisionPage />} />
-
-        {divisionPages.length > 0 && divisionPages.map((page) => {
-          const path = `/admim/division/${encodeURIComponent(page.pageTitle.toLowerCase().replace(/\s+/g, '-'))}`;
-          return (
             <Route
-              key={page._id}
-              path={path}
-              element={<DivisionDynamicPage pageData={page} />}
+              path={`/${Role}`}
+              element={
+                <HomePage
+                  uploads={uploads}
+                  banner={banner}
+                  facility={facility}
+                  recentDevelopments={recentDevelopments}
+                  foundationDay={foundationDay}
+                  printMedia={printMedia}
+                  updates={updates}
+                  director={director}
+                  notifications={notifications}
+                  news={news}
+                  visionMandate={visionMandate}  // 👈 also here
+                  isAdmin={isAdmin}
+                  setIsAdmin={setIsAdmin}
+                />
+              }
             />
-          );
-        })}
-      </Routes>
+
+
+            {/* topbar routes */}
+            <Route path={`/${Role}/events`} element={<EventsPage isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/career`} element={<CareerPage isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/RTI`} element={<RTIPage isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/officeMemorandum`} element={<OfficeMemorandumPage isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/SRA`} element={<ScreenReaderAccess isAdmin={isAdmin} />} />
+
+            {/* about pages */}
+            <Route path={`/${Role}/about`} element={<AboutPage isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/Organization`} element={<Organisation isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/research-council`} element={<ResearchCouncil isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/management-council`} element={<ManagementCouncilPage isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/staff-page`} element={<StaffPage isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/former-directors`} element={<FormerDirectorsPage isAdmin={isAdmin} />} />
+
+            {/* research pages */}
+            <Route path={`/${Role}/research/LWMD`} element={<LightWeightMaterials isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/research/FMCD`} element={<FunctionalMaterialsComposites isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/research/SCMD`} element={<SustainableConstructionMaterials isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/research/EESD`} element={<EnergyEnvironmentalSolutions isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/research/IMDD`} element={<IntelligentMaterialsDevices isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/research/IMPD`} element={<InnovativeMaterialsProcesses isAdmin={isAdmin} />} />
+
+
+            {/* r&d pages */}
+            <Route path={`/${Role}/r&d-Management`} element={<RnDPage isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/r&d-Management/Technology-Knowhow`} element={<TechnologyKnowhowPage isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/r&d-Management/MOU`} element={<MouPage isAdmin={isAdmin} />} />
+
+            {/* tender page */}
+            <Route path={`/${Role}/tender`} element={<TenderPage isAdmin={isAdmin} />} />
+
+            {/* Admins Pages */}
+            <Route path="/adminLogin" element={<AdminLogin setIsAdmin={setIsAdmin} />} />
+
+            <Route path={`/${Role}/directory`} element={<DirectoryPage isAdmin={isAdmin} />} />
+
+            <Route path={`/${Role}/gallery`} element={<GalleryPage isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/video-gallery`} element={<VideoGalleryPage isAdmin={isAdmin} />} />
+
+            <Route path={`/${Role}/csr`} element={<CSR isAdmin={isAdmin} />} />
+
+            {/* services pages */}
+            <Route path={`/${Role}/services/HR`} element={<HumanResourcePage isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/services/ISTAG`} element={<ISTAG isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/services/Dispensary`} element={<Dispensary isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/services/guest-house`} element={<GuestHouse isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/services/rajbhasha-cell`} element={<RajbhashaCell isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/services/director-secretariat`} element={<DirectorSecretariat isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/services/administration`} element={<Administration isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/services/Workshop`} element={<Workshop isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/services/engineering-services`} element={<EngineeringServices isAdmin={isAdmin} />} />
+
+            {Role ==="Super-Admin" || Role ==="Admin"  && <Route path={`/${Role}/dashboard`} element={<AdminDashboard isAdmin={isAdmin} />} />}
+
+            {/* homepage edits*/}
+            <Route path={`/${Role}/edituploads/:section`} element={<EditSectionPage sectionUploads={uploads} isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/editdirector`} element={<EditDirectorPage director={director} isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/editnews`} element={<EditNewsPage news={news} isAdmin={isAdmin} />} />
+            <Route path={`/${Role}/editnotification`} element={<EditNotificationPage notifications={notifications} isAdmin={isAdmin} />} />
+
+            {/* division */}
+            <Route
+              path={`/${Role}/editvision`}
+              element={<EditVisionMandatePage visionMandate={visionMandate} isAdmin={isAdmin} />}
+            />
+            <Route path="/division" element={<DemoDivisionPage />} />
+
+            {divisionPages.length > 0 && divisionPages.map((page) => {
+              const path = `/admim/division/${encodeURIComponent(page.pageTitle.toLowerCase().replace(/\s+/g, '-'))}`;
+              return (
+                <Route
+                  key={page._id}
+                  path={path}
+                  element={<DivisionDynamicPage pageData={page} />}
+                />
+              );
+            })}
+          </Routes>
+          :
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <HomePage
+                  uploads={uploads}
+                  banner={banner}
+                  facility={facility}
+                  recentDevelopments={recentDevelopments}
+                  foundationDay={foundationDay}
+                  printMedia={printMedia}
+                  updates={updates}
+                  director={director}
+                  notifications={notifications}
+                  news={news}
+                  visionMandate={visionMandate}   // 👈 pass to homepage
+                  isAdmin={isAdmin}
+                  setIsAdmin={setIsAdmin}
+                />
+              }
+            />
+
+
+
+            {/* topbar routes */}
+            <Route path="/events" element={<EventsPage isAdmin={isAdmin} />} />
+            <Route path="/career" element={<CareerPage isAdmin={isAdmin} />} />
+            <Route path="/RTI" element={<RTIPage isAdmin={isAdmin} />} />
+            <Route path="/officeMemorandum" element={<OfficeMemorandumPage isAdmin={isAdmin} />} />
+            <Route path="/SRA" element={<ScreenReaderAccess isAdmin={isAdmin} />} />
+
+            {/* about pages */}
+            <Route path={"/about"} element={<AboutPage isAdmin={isAdmin} />} />
+            <Route path={"/Organization"} element={<Organisation isAdmin={isAdmin} />} />
+            <Route path="/research-council" element={<ResearchCouncil isAdmin={isAdmin} />} />
+            <Route path="/management-council" element={<ManagementCouncilPage isAdmin={isAdmin} />} />
+            <Route path="/staff-page" element={<StaffPage isAdmin={isAdmin} />} />
+            <Route path="/former-directors" element={<FormerDirectorsPage isAdmin={isAdmin} />} />
+
+            {/* research pages */}
+            <Route path="/research/LWMD" element={<LightWeightMaterials isAdmin={isAdmin} />} />
+            <Route path="/research/FMCD" element={<FunctionalMaterialsComposites isAdmin={isAdmin} />} />
+            <Route path="/research/SCMD" element={<SustainableConstructionMaterials isAdmin={isAdmin} />} />
+            <Route path="/research/EESD" element={<EnergyEnvironmentalSolutions isAdmin={isAdmin} />} />
+            <Route path="/research/IMDD" element={<IntelligentMaterialsDevices isAdmin={isAdmin} />} />
+            <Route path="/research/IMPD" element={<InnovativeMaterialsProcesses isAdmin={isAdmin} />} />
+
+
+            {/* r&d pages */}
+            <Route path={"/r&d-Management"} element={<RnDPage isAdmin={isAdmin} />} />
+            <Route path="/r&d-Management/Technology-Knowhow" element={<TechnologyKnowhowPage isAdmin={isAdmin} />} />
+            <Route path="/r&d-Management/MOU" element={<MouPage isAdmin={isAdmin} />} />
+
+            {/* tender page */}
+            <Route path={"/tender"} element={<TenderPage isAdmin={isAdmin} />} />
+
+            {/* Admins Pages */}
+            <Route path="/adminLogin" element={<AdminLogin setIsAdmin={setIsAdmin} />} />
+
+            <Route path={"/directory"} element={<DirectoryPage isAdmin={isAdmin} />} />
+
+            <Route path={"/gallery"} element={<GalleryPage isAdmin={isAdmin} />} />
+            <Route path={"/video-gallery"} element={<VideoGalleryPage isAdmin={isAdmin} />} />
+
+            <Route path={"/csr"} element={<CSR isAdmin={isAdmin} />} />
+
+            {/* services pages */}
+            <Route path="/services/HR" element={<HumanResourcePage isAdmin={isAdmin} />} />
+            <Route path="/services/ISTAG" element={<ISTAG isAdmin={isAdmin} />} />
+            <Route path="/services/Dispensary" element={<Dispensary isAdmin={isAdmin} />} />
+            <Route path="/services/guest-house" element={<GuestHouse isAdmin={isAdmin} />} />
+            <Route path="/services/rajbhasha-cell" element={<RajbhashaCell isAdmin={isAdmin} />} />
+            <Route path="/services/director-secretariat" element={<DirectorSecretariat isAdmin={isAdmin} />} />
+            <Route path="/services/administration" element={<Administration isAdmin={isAdmin} />} />
+            <Route path="/services/Workshop" element={<Workshop isAdmin={isAdmin} />} />
+            <Route path="/services/engineering-services" element={<EngineeringServices isAdmin={isAdmin} />} />
+
+            <Route path="/division" element={<DemoDivisionPage />} />
+
+            {divisionPages.length > 0 && divisionPages.map((page) => {
+              const path = `/admim/division/${encodeURIComponent(page.pageTitle.toLowerCase().replace(/\s+/g, '-'))}`;
+              return (
+                <Route
+                  key={page._id}
+                  path={path}
+                  element={<DivisionDynamicPage pageData={page} />}
+                />
+              );
+            })}
+          </Routes>
+      }
+
 
     </>
   );
 }
-
 export default App;

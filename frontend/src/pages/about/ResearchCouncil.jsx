@@ -1,82 +1,44 @@
-import React from "react";
+// @ts-nocheck
+import React, { useEffect, useState } from "react";
 import Navbar from "../../components/ui/Navbar";
 import Topbar from "../../components/ui/Topbar";
 import Footer from "../../components/ui/Footer";
 import DataTable from "../../components/ui/DataTableRender";
 
+import { fetchCouncils } from "../../api/axios";
 
-// Structured data for Research Council members
-const councilData = [
-    {
-        "SNo": "1",
-        "Name": "Prof. Vinod Kumar Singh",
-        "Affiliation": "Chair Professor, Department of Chemistry, Indian Institute of Technology, Kanpur",
-        "Position": "Chairman"
-    },
-    {
-        "SNo": "2",
-        "Name": "Dr. Vilas Tathavadkar",
-        "Affiliation": "Senior Vice President, Aditya Birla Science & Technology Company Ltd., Navi Mumbai",
-        "Position": "External Member"
-    },
-    {
-        "SNo": "3",
-        "Name": "Shri Sudipta Saha",
-        "Affiliation": "President, Tile Operations & Business Head, Industrial Products H&R, India Ltd., Pune",
-        "Position": "External Member"
-    },
-    {
-        "SNo": "4",
-        "Name": "Prof. Shampa Aich",
-        "Affiliation": "Department of Metallurgical and Materials Engineering, Indian Institute of Technology, Kharagpur",
-        "Position": "External Member"
-    },
-    {
-        "SNo": "5",
-        "Name": "Prof. N. Ravi Shankar",
-        "Affiliation": "Department of Materials Research Centre, Indian Institute of Science, Bengaluru",
-        "Position": "External Member"
-    },
-    {
-        "SNo": "6",
-        "Name": "Dr. S. V. S. Narayana Murty",
-        "Affiliation": "General Manager, Materials Development and Production Group, Liquid Propulsion Systems Centre, Indian Space Research Organisation, Trivandrum",
-        "Position": "Agency Representative"
-    },
-    {
-        "SNo": "7",
-        "Name": "Shri Mayank Mathur",
-        "Affiliation": "Sr. Principal Scientist, Central Planning Directorate (CPD), Council of Scientific & Industrial Research, New Delhi",
-        "Position": "DG's Representative"
-    },
-    {
-        "SNo": "8",
-        "Name": "Prof. Bikramjit Basu",
-        "Affiliation": "Director, CSIR-Central Glass & Ceramic Research Institute, Kolkata",
-        "Position": "Sister Laboratory"
-    },
-    {
-        "SNo": "9",
-        "Name": "Director",
-        "Affiliation": "CSIR-Advanced Materials and Processes Research Institute, Bhopal",
-        "Position": "Member"
-    },
-    {
-        "SNo": "10",
-        "Name": "Dr. J. P. Chaurasia",
-        "Affiliation": "Sr. Principal Scientist, CSIR-Advanced Materials and Processes Research Institute, Bhopal",
-        "Position": "Secretary"
-    }
-];
-
-const councilColumns = [
-    "SNo",
-    "Name",
-    "Affiliation",
-    "Position"
-];
 
 function ResearchCouncil({ isAdmin }) {
+
+    const [councilData, setcouncilData] = useState([])
+    const [councilColumns, setcouncilColumns] = useState([])
+    const [table, settable] = useState({})
+    // console.log("ResearchCouncil isAdmin :", councilDataa, councilColumnss)
+    useEffect(() => async () => {
+        try {
+            const res = await fetchCouncils();
+            if (res.data) {
+                const Data = res.data
+                    .sort((a, b) => a.order - b.order).map(item => ({
+                        _id: item._id,
+                        order: item.order,
+                        name: item.name,
+                        Affiliation: item.Affiliation,
+                        Position: item.Position
+                    }));
+                const Columns = res.data[0].table.columns;
+                console.log("ResearchCouncil data : ", Data, Columns);
+                setcouncilData(Data);
+                setcouncilColumns(Columns);
+                settable(res.data[0].table);
+
+                console.log("ResearchCouncil data: ", res);
+            }
+        } catch (err) {
+            console.error("Error fetching councils:", err);
+        }
+    }, [])
+
     return (
         <div className="min-h-screen bg-gray-50">
             <Topbar isAdmin={isAdmin} />
@@ -87,6 +49,10 @@ function ResearchCouncil({ isAdmin }) {
                 data={councilData}
                 entriesPerPageOptions={[10, 25, 50]}
                 title="Research Council Members"
+                from="ResearchCouncil"
+                table={table}
+
+                isAdmin={isAdmin}
             />
 
             <Footer />

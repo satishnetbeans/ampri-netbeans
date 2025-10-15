@@ -1,9 +1,10 @@
+// @ts-nocheck
 import React from "react"
 import Navbar from "../../components/ui/Navbar"
 import Topbar from "../../components/ui/Topbar"
 import Footer from "../../components/ui/Footer"
 
-function RTIPage() {
+function RTIPage({isAdmin}) {
     const rtiItems = [
         "Particulars of organisation, functions and duties",
         "Powers and duties of officers and employees",
@@ -39,8 +40,8 @@ function RTIPage() {
 
     return (
         <div>
-            <Topbar />
-            <Navbar />
+            <Topbar isAdmin={isAdmin}/>
+            <Navbar isAdmin={isAdmin}/>
 
             <h1 className="text-3xl font-bold my-6 text-[#004080] text-center">Right To Information(RTI) Act 2005</h1>
             <table className="w-[95%] mx-auto border-collapse border border-gray-200 mb-6">

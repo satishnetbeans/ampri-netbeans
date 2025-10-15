@@ -4,16 +4,6 @@ import React, { useState } from 'react';
 import ItemEditorModal from './ItemEditor';
 import { deleteUpload } from '../../api/axios';
 
-/**
- * SectionEditor
- * - section: section string stored in uploads.section
- * - title: UI title
- * - fields: config passed to ItemEditorModal
- * - items: list of section items (passed from parent, no fetching here)
- * - isAdmin: boolean to show admin actions
- * - onListChange: callback when list changes (e.g., to refresh HomePage data)
- */
-
 export default function SectionEditor({ section, title, fields, items = [], isAdmin = true, onListChange }) {
     const [modalOpen, setModalOpen] = useState(false);
     const [editing, setEditing] = useState(null);
@@ -24,8 +14,11 @@ export default function SectionEditor({ section, title, fields, items = [], isAd
     const handleDelete = async (id) => {
         if (!confirm('Delete this item?')) return;
         try {
-            await deleteUpload(id);
-            onListChange && onListChange(); // parent refresh (HomePage fetch)
+            const res = await deleteUpload(id);
+            if (res.data) {
+                alert('Delete successful');
+                onListChange && onListChange(); // parent refresh (HomePage fetch)
+            }
         } catch (err) {
             console.error(err);
             alert('Delete failed');

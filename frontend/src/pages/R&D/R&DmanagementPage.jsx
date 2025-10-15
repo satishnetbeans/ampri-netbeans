@@ -1,12 +1,16 @@
-import React, { useState } from "react"
+// @ts-nocheck
+import React, { useState, useEffect } from "react"
 import Navbar from "../../components/ui/Navbar"
 import Topbar from "../../components/ui/Topbar"
 import Footer from "../../components/ui/Footer"
 import ContentRenderer from "../../components/ui/ContentRenderer"
 
+import { fetchRnD } from "../../api/axios"
+
 const RnDampri = {
   title: "R&D Management at CSIR-AMPRI",
   pageContent: {
+    content: [],
     tabs: [
       {
         title: "Planning & Performance",
@@ -52,49 +56,26 @@ const RnDampri = {
 }
 
 function RnDPage({ isAdmin }) {
-  const [activeTab, setActiveTab] = useState(0);
+  const [RnDampri, setRnDampri] = useState(null)
+  useEffect(() => {
+    const getLWMD = async () => {
+      try {
+        const res = await fetchRnD()
+        if (res.data) {
+          const data = res.data
+          data.pageContent.content.sort((a, b) => a.order - b.order)
+          setRnDampri(data)
+          console.log("RnDampri : ", data)
+        } else {
+          console.log(res.error)
+        }
+      } catch (error) {
+        console.log(error)
 
-  const renderContent = (content) => {
-    return content.map((item, index) => {
-      switch (item.type) {
-        case 'image':
-          return (
-            <div key={index} className="h-[62vh] w-full overflow-hidden my-6 flex justify-center bg-amber-200">
-              <img
-                src={item.src}
-                alt={item.alt}
-                className="w-full h-full rounded-lg shadow-md object-fill"
-              />
-            </div>
-          );
-        case 'heading':
-          return (
-            <h2 key={index} className="text-2xl font-semibold mt-8 mb-4 text-[#004080]">
-              {item.para}
-            </h2>
-          );
-        case 'paragraph':
-          return (
-            <p key={index} className="text-[#555555] mb-4">
-              {item.para}
-            </p>
-          );
-        case 'list':
-          return (
-            <div key={index} className="mb-6">
-              <p className="text-[#555555] font-semibold mb-2">{item.para}</p>
-              <ul className="list-disc pl-6 text-[#555555] space-y-2">
-                {item.items.map((listItem, i) => (
-                  <li key={i}>{listItem}</li>
-                ))}
-              </ul>
-            </div>
-          );
-        default:
-          return null;
       }
-    });
-  };
+    }
+    getLWMD()
+  }, [])
 
   return (
     <div className="min-h-screen">
@@ -102,7 +83,8 @@ function RnDPage({ isAdmin }) {
       <Navbar isAdmin={isAdmin} />
 
       {/* Use the reusable ContentRenderer component */}
-      <ContentRenderer contentData={RnDampri} />
+      {RnDampri && <ContentRenderer contentData={RnDampri} isAdmin={isAdmin} />}
+      
 
       <Footer />
       <div id="google_translate_element" className="invisible"></div>

@@ -1,29 +1,33 @@
+// @ts-nocheck
 import ExternalLinks from "./ExternalLinks";
 
 const linkData = [
   {
     title: "Intranet",
-    links: ["AMPRI Intranet", "Holidays 2025", "Web mail", "CSIR Directory", "CSIR Labs and Units"],
+    links: [{name:"AMPRI Intranet" ,url :"#"},{name:"Holidays 2025" ,url :"https://ampri.res.in/en/wp-content/uploads/2025/06/HolidayList2025.pdf"} , {name:"Web mail" ,url :"https://accounts.mgovcloud.in/signin?servicename=VirtualOffice&serviceurl=https%3A%2F%2Fmail.mgovcloud.in%2F"}, {name:"CSIR Directory" ,url :"https://www.csir.res.in/hi/csir-directory"}, {name:"CSIR Labs and Units" ,url :"https://www.csir.res.in/hi/csir-labs-and-units"}],
   },
   {
     title: "KRC",
-    links: ["Institutional Repository", "Online Journals"],
+    links: [{name:"Institutional Repository" ,url :"https://ampri.csircentral.net/"}, {name:"Online Journals" ,url :"https://onos.gov.in/"}],
   },
+  //
   {
     title: "Performance",
-    links: ["Significant Contributions", "Ongoing Projects", "R&D Output", "Human resource"],
+    links: [{name:"Significant Contributions" ,url :"#"}, {name:"Ongoing Projects" ,url :"#"}, {name:"R&D Output" ,url :"#"}, {name:"Human resource" ,url :"/services/HR"}],
   },
   {
     title: "Publications",
-    links: ["News Letter", "Annual Reports", "CSIR-AMPRI PUBLICATIONS"],
+    links: [{name:"News Letter" ,url :"#"}, {name:"Annual Reports" ,url :"#"}, {name:"CSIR-AMPRI PUBLICATIONS" ,url :"https://ampri.irins.org/"}],
   },
+
   {
     title: "R&D Facilities",
-    links: ["Testing Facility Available", "Simulation and Modeling", "Characterization"],
+    links: [{name:"Testing Facility Available" ,url :"#"}, {name:"Simulation and Modeling" ,url :"#"} , {name:"Characterization" ,url :"#"}],
   },
+
   {
     title: "Professional Societies",
-    links: ["MRSI Bhopal Chapter", "IIM Bhopal Chapter", "TSI Bhopal Chapter"],
+    links: [{name:"MRSI Bhopal Chapter" ,url :"#"}, {name:"IIM Bhopal Chapter" ,url :"#"}, {name:"TSI Bhopal Chapter" ,url :"#"}],
   },
 ];
 
@@ -49,7 +53,8 @@ const NavigationLinks = ({ isAdmin }) => (
             <ul className="space-y-1 text-red-400 ">
               {section.links.map((link, i) => (
                 <li key={i} className="hover:underline cursor-pointer">
-                  {link}
+                  <a target="_blank" href={link.url}>{link.name}</a>
+                  
                 </li>
               ))}
             </ul>

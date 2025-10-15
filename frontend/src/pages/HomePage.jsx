@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect , useState } from 'react';
 
 import SocialIcons from '../components/media components/SocialIcons';
 import Navbar from '../components/ui/Navbar';
@@ -18,20 +18,35 @@ import ReachUs from '../components/ReachUs';
 import Footer from '../components/ui/Footer';
 import Topbar from '../components/ui/Topbar';
 
-function HomePage({ uploads, banner, visionMandate, facility, recentDevelopments, foundationDay, printMedia, updates, director, notifications, news, isAdmin }) {
+import { useUserData } from '../context/UserDataContext';
+
+import StructureRoleRoute from '../utils/StructureRoleRoute';
+
+function HomePage({ uploads, banner, visionMandate, facility, recentDevelopments, foundationDay, printMedia, updates, director, notifications, news, isAdmin, setIsAdmin }) {
 
   const navigate = useNavigate()
 
+  const { UserData } = useUserData();
+
+  const [role, setrole] = useState(null)
+
   useEffect(() => {
-    if (isAdmin) {
-      navigate('/admin');
+
+    if (UserData) {
+      const rl =StructureRoleRoute(UserData)
+      setrole(rl)
+      rl && navigate(`/${rl}`);
+    } else {
+      navigate('/');
     }
-  }, [isAdmin, navigate]);
+  }, [UserData, navigate]);
 
   return (
 
     <div className='className="min-h-screen w-full overflow-x-hidden flex flex-col items-center'>
-      <Topbar />
+      <div className="sticky top-0 z-50 w-full">
+        <Topbar isAdmin={isAdmin} setIsAdmin={setIsAdmin} />
+      </div>
 
       {/* Accessibility Widget */}
       {/* <button
@@ -54,47 +69,47 @@ function HomePage({ uploads, banner, visionMandate, facility, recentDevelopments
       </button> */}
 
       <div className="flex flex-col items-center w-[100vw] min-h-screen ">
-        <Navbar isAdmin={isAdmin} />
+        <Navbar isAdmin={isAdmin} userRole ={role} />
         {/* This is where dropdown will appear */}
         <div id="google_translate_element" ></div>
 
         <div className='grid grid-cols-2 h-[54vh] justify-evenly max-[600px]:flex-col max-[700px]:w-[100vw] max-[600px]:h-auto max-[700px]:grid-cols-1 pl-5'>
-          <HeroBanner banners={banner} isAdmin={isAdmin} />
-          <NewsAndNotification news={news} notifications={notifications} isAdmin={isAdmin} />
+          <HeroBanner banners={banner} isAdmin={isAdmin} userRole ={role}/>
+          <NewsAndNotification news={news} notifications={notifications} isAdmin={isAdmin} userRole ={role}/>
         </div>
 
         <div className='h-[5px] w-[97vw] bg-gray-300 rounded-md my-4'></div>
 
         <div className='w-full h-[80vh] flex items-center gap-3 justify-between max-[600px]:flex-col max-[600px]:h-auto  md:px-[6px] mt-2.5'>
-          <VisionAndMandate visionMandate={visionMandate} isAdmin={isAdmin} />
-          <DirectorSection director={director} isAdmin={isAdmin} />
+          <VisionAndMandate visionMandate={visionMandate} isAdmin={isAdmin} userRole ={role}/>
+          <DirectorSection director={director} isAdmin={isAdmin} userRole ={role}/>
         </div>
 
         <div className='h-[5px] w-[97vw] bg-gray-300 rounded-md my-4'></div>
 
         <div className='w-[100vw] h-[50vh]  max-[600px]:flex-col max-[600px]:h-auto max-[600px]:pb-2 mb-0 '>
-          <LatestUpdates recentDevelopments={recentDevelopments} foundationDay={foundationDay} isAdmin={isAdmin} />
+          <LatestUpdates recentDevelopments={recentDevelopments} foundationDay={foundationDay} isAdmin={isAdmin} userRole ={role}/>
         </div>
 
         <div className='h-[5px] w-[97vw] bg-gray-300 rounded-md my-6 '></div>
 
         <div className='w-full h-[60vh] flex max-[600px]:flex-col max-[600px]:h-auto max-[600px]:pb-2 '>
-          <FacilitiesCarousel facilities={facility} isAdmin={isAdmin} />
-          <MediaSection printMedia={printMedia} updates={updates} isAdmin={isAdmin} />
+          <FacilitiesCarousel facilities={facility} isAdmin={isAdmin} userRole ={role}/>
+          <MediaSection printMedia={printMedia} updates={updates} isAdmin={isAdmin} userRole ={role}/>
         </div>
 
         <div className='h-[5px] w-[97vw] bg-gray-300 rounded-md my-4'></div>
 
         <div className='w-full h-[50vh] flex max-[600px]:h-[auto] max-[600px]:flex-col '>
-          <ImportantLinks isAdmin={isAdmin} />
-          <NavigationLinks isAdmin={isAdmin} />
+          <ImportantLinks isAdmin={isAdmin} userRole ={role}/>
+          <NavigationLinks isAdmin={isAdmin} userRole ={role}/>
         </div>
 
         <div className='w-full h-[35vh] flex items-center'>
           <ReachUs isAdmin={isAdmin} />
         </div>
 
-        <Footer isAdmin={isAdmin} />
+        <Footer isAdmin={isAdmin} userRole ={role}/>
       </div>
     </div>
   );

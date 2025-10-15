@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 
 const links = [
@@ -6,7 +7,7 @@ const links = [
   { name: "Knowledge Base", icon: "📚", url: "#" },
   { name: "SAIF", icon: "🍽️", url: "#" },
   { name: "AcSIR", icon: "🎓", url: "#" },
-  { name: "Skill Development Program @ CSIR-AMPRI", icon: "🔧", url: "#" },
+  { name: "Skill Development Program @ CSIR-AMPRI", icon: "🔧", url: "https://ampri.res.in/en/wp-content/uploads/2025/08/SkillInitiativePhaseIII@AMPRI.pdf" },
 ];
 
 const ImportantLinks = ({ isAdmin }) => {

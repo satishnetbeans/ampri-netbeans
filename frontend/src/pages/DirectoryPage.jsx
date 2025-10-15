@@ -1,48 +1,59 @@
-import React from "react";
+// @ts-nocheck
+import React ,{useEffect, useState} from "react";
 import Navbar from "../components/ui/Navbar";
 import Topbar from "../components/ui/Topbar";
 import Footer from "../components/ui/Footer";
 import DataTable from "../components/ui/DataTableRender";
-// Sample data for directory (you would replace this with your actual data)
-const directoryData = [
-  {
-    "NAME": "डॉ. थल्लाडा भास्कर Dr. Thallada Bhaskar",
-    "DESIGNATION": "निदेशक Director",
-    "EMAIL": "director.ampri@csir.res.in thallada.bhaskar@csir.res.in",
-    "INTERCOM": "1113/1114",
-    "OFFICE": "2457105"
-  },
-  {
-    "NAME": "डॉ. पी अशोकन Dr. P Asokan",
-    "DESIGNATION": "मुख्य वैज्ञानिक Chief Scientist",
-    "EMAIL": "pasokan.ampri@csir.res.in",
-    "INTERCOM": "1329",
-    "OFFICE": "2489402"
-  },
-  // Add more directory data here...
-];
+import { fetchAmpriDirectory } from "../api/axios";
 
-const directoryColumns = [
-  "NAME",
-  "DESIGNATION",
-  "EMAIL",
-  "INTERCOM",
-  "OFFICE"
-];
 
 function DirectoryPage({ isAdmin }) {
+  const [directoryData, setcouncilData] = useState([])
+  const [directoryColumns, setcouncilColumns] = useState([])
+  const [table, settable] = useState({})
+  // console.log("ResearchCouncil isAdmin :", councilDataa, councilColumnss)
+  useEffect(() => async () => {
+    try {
+      const res = await fetchAmpriDirectory();
+      if (res.data) {
+        console.log("AmpriDirectory res.data:", res.data);
+        const Data = res.data
+          .sort((a, b) => a.order - b.order).map(item => ({
+            _id: item._id,
+            order: item.order,
+            name: item.name,
+            designation: item.designation,
+            email: item.email,
+            INTERCOM: item.intercom,
+            OFFICE: item.office
+          }));
+        const Columns = res.data[0].table.columns;
+        console.log("AmpriDirectory data : ", Data, Columns);
+        setcouncilData(Data);
+        setcouncilColumns(Columns);
+        settable(res.data[0].table);
+
+        console.log("AmpriDirectory data: ", res);
+      }
+    } catch (err) {
+      console.error("Error fetching councils:", err);
+    }
+  }, [])
   return (
     <div className="min-h-screen">
       <Topbar isAdmin={isAdmin} />
       <Navbar isAdmin={isAdmin} />
-      
-      <DataTable 
+
+      <DataTable
         title="CSIR-AMPRI Staff Directory"
         columns={directoryColumns}
         data={directoryData}
         entriesPerPageOptions={[10, 25, 50]}
+        isAdmin={isAdmin}
+        from="AmpriDirectory"
+        table={table}
       />
-      
+
       <Footer />
       <div id="google_translate_element" ></div>
     </div>

@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const HeroBanner = ({ banners, isAdmin }) => {
+const HeroBanner = ({ banners, isAdmin, userRole }) => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [enlarged, setEnlarged] = useState(null);
@@ -74,7 +74,7 @@ const HeroBanner = ({ banners, isAdmin }) => {
                 {/* edit option for admim */}
                 {isAdmin && (
                   <button
-                    onClick={() => navigate("/admin/edituploads/banner")}
+                    onClick={() => navigate(`${userRole && `/${userRole}/edituploads/banner`}`)}
                     className="absolute right-2 top-[5px] z-20 bg-blue-800 py-1 px-2 rounded-md cursor-pointer text-white font-semibold text-[16px]  border border-white hover:bg-blue-600"
                   >
                     Edit Banners
@@ -98,7 +98,7 @@ const HeroBanner = ({ banners, isAdmin }) => {
                 {/* edit option for admim */}
                 {isAdmin && (
                   <button
-                    onClick={() => navigate("/admin/edituploads/banner")}
+                    onClick={() => navigate(`${userRole && `/${userRole}/edituploads/banner`}`)}
                     className="absolute right-2 top-[5px] z-20 bg-blue-800 py-1 px-2 rounded-md cursor-pointer text-white font-semibold text-[16px]  border border-white hover:bg-blue-600"
                   >
                     Edit Banners

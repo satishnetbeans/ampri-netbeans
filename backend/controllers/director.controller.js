@@ -1,4 +1,5 @@
-import Director from "../models/director.model.js";
+// @ts-nocheck
+import Director from "../models/homePage/director.model.js";
 
 // Create or update director (upsert behavior)
 export const createDirector = async (req, res) => {
@@ -43,7 +44,7 @@ export const updateDirector = async (req, res) => {
     const { id } = req.params;
     const { name, designation, message, image } = req.body;
 
-    console.log(id ,req.body)
+
 
     const director = await Director.findById(id);
     if (!director) {

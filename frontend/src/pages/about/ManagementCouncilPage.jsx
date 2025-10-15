@@ -1,79 +1,43 @@
-import React from "react";
+// @ts-nocheck
+import React ,{useEffect,useState} from "react";
 import Navbar from "../../components/ui/Navbar";
 import Topbar from "../../components/ui/Topbar";
 import Footer from "../../components/ui/Footer";
 import DataTable from "../../components/ui/DataTableRender";
 
-// Structured data for Management Council members
-const managementData = [
-    {
-        "SNo": "1",
-        "Name": "The Director, AMPRI",
-        "Affiliation": "Director CSIR-AMPRI",
-        "Position": "Chairman"
-    },
-    {
-        "SNo": "2",
-        "Name": "Prof. Venugopal Achanta",
-        "Affiliation": "Director CSIR-NPL, New Delhi",
-        "Position": "Member"
-    },
-    {
-        "SNo": "3",
-        "Name": "Dr. Manish Mudgal",
-        "Affiliation": "Chief Scientist, AMPRI",
-        "Position": "Member"
-    },
-    {
-        "SNo": "4",
-        "Name": "Dr. J. P. Chaurasia",
-        "Affiliation": "Senior Principal Scientist & Head PPD, AMPRI",
-        "Position": "Member"
-    },
-    {
-        "SNo": "5",
-        "Name": "Dr. Kirti Soni",
-        "Affiliation": "Principal Scientist, AMPRI",
-        "Position": "Member"
-    },
-    {
-        "SNo": "6",
-        "Name": "Dr. Chetna Dhand",
-        "Affiliation": "Senior Scientist, AMPRI",
-        "Position": "Member"
-    },
-    {
-        "SNo": "7",
-        "Name": "Mr. Narendra Singh",
-        "Affiliation": "Senior Scientist, AMPRI",
-        "Position": "Member"
-    },
-    {
-        "SNo": "8",
-        "Name": "Dr. E Peters",
-        "Affiliation": "Principal Technical Officer, AMPRI",
-        "Position": "Member"
-    },
-    {
-        "SNo": "9",
-        "Name": "F&AO, AMPRI",
-        "Position": "Member"
-    },
-    {
-        "SNo": "10",
-        "Name": "COA/AO, AMPRI",
-        "Position": "Member-Secretary"
-    }
-];
+import { fetchManagementCouncils } from "../../api/axios";
 
-const managementColumns = [
-    "SNo",
-    "Name",
-    "Affiliation",
-    "Position"
-];
 
 function ManagementCouncilPage({ isAdmin }) {
+    const [managementData, setcouncilData] = useState([])
+    const [managementColumns, setcouncilColumns] = useState([])
+    const [table, settable] = useState({})
+    // console.log("ResearchCouncil isAdmin :", councilDataa, councilColumnss)
+    useEffect(() => async () => {
+        try {
+            const res = await fetchManagementCouncils();
+            if (res.data) {
+                console.log("ManagementCouncil res.data:", res.data);
+                const Data = res.data
+                    .sort((a, b) => a.order - b.order).map(item => ({
+                        _id: item._id,
+                        order: item.order,
+                        name: item.name,
+                        Affiliation: item.Affiliation,
+                        Position: item.Position
+                    }));
+                const Columns = res.data[0].table.columns;
+                console.log("ManagementCouncil data : ", Data, Columns);
+                setcouncilData(Data);
+                setcouncilColumns(Columns);
+                settable(res.data[0].table);
+
+                console.log("ManagementCouncil data: ", res);
+            }
+        } catch (err) {
+            console.error("Error fetching councils:", err);
+        }
+    }, [])
     return (
         <div className="min-h-screen bg-gray-50">
             <Topbar isAdmin={isAdmin} />
@@ -82,8 +46,13 @@ function ManagementCouncilPage({ isAdmin }) {
             <DataTable
                 columns={managementColumns}
                 data={managementData}
-                entriesPerPageOptions={[10, 25,50]}
+                entriesPerPageOptions={[10, 25, 50]}
                 title="Management Council Members"
+
+                from="ManagementCouncil"
+                table={table}
+
+                isAdmin={isAdmin}
             />
 
             <Footer />

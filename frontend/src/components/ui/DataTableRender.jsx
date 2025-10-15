@@ -1,17 +1,42 @@
 //@ts-nocheck
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, act } from "react";
 
-function DataTable({ from, title, columns, data, entriesPerPageOptions = [10, 25, 50], tabs = null }) {
+import AdminEditTable from "../Admin Edits/EditTable";
+
+import checkBaseURL from "../../utils/CheckBaseUrl";
+
+function DataTable({ from, title, columns, data, entriesPerPageOptions = [10, 25, 50], tabs = null, isAdmin, table }) {
+    const baseUrl = checkBaseURL()
+
+    console.log("DataTable Render from :", from, title, columns, data, entriesPerPageOptions, tabs, isAdmin, table)
+
     const [currentPage, setCurrentPage] = useState(1);
     const [entriesPerPage, setEntriesPerPage] = useState(entriesPerPageOptions[0]);
     const [searchTerm, setSearchTerm] = useState("");
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
+    
     const [activeTab, setActiveTab] = useState(tabs ? tabs[0].key : null);
+    const [isEditVisible, setIsEditVisible] = useState(false);
 
     // Determine which data to use based on tabs
-    const dataSource = tabs ?
-        (tabs.find(tab => tab.key === activeTab)?.data || []) :
-        data;
+    const dataSource = useMemo(() => {
+        return tabs
+            ? (tabs.find(tab => tab.key === activeTab)?.data || [])
+            : data;
+    }, [tabs, activeTab, data]);
+
+    // Toggle edit visibility
+    const toggleEditVisibility = () => {
+        setIsEditVisible(!isEditVisible);
+    };
+
+    // Handle data update from AdminEditTable
+    const handleDataUpdate = (updatedData) => {
+        if (onDataUpdate) {
+            onDataUpdate(updatedData, activeTab);
+        }
+        setIsEditVisible(false);
+    };
 
     // Request sort for a column
     const requestSort = (key) => {
@@ -88,14 +113,31 @@ function DataTable({ from, title, columns, data, entriesPerPageOptions = [10, 25
 
     // Render cell content based on column type
     const renderCellContent = (column, value) => {
-        if (column.toLowerCase() === 'img' && value) {
+        if (column.toLowerCase() === 'imageurl' && value) {
             return (
-                <div className="flex items-center justify-center h-full w-24">
+                <div className="flex items-center justify-center h-full w-24 overflow-hidden">
                     <img
                         src={value}
                         alt="Profile"
                         className="h-28 w-full  object-cover border-2 border-gray-200"
                     />
+                </div>
+            );
+        }
+
+        if ((column.toLowerCase() === "details/download tender documents" || column.toLowerCase() === "more details" || (from === "Career" &&(column.toLowerCase() === "project staff" || column.toLowerCase() === "detail & application" || column.toLowerCase() === "notifications" || column.toLowerCase() === "shortlisted candidates for interview" || column.toLowerCase() === "result")) || (from === "OfficeMemorandum" && column.toLowerCase() === "download/details") ) && value) {
+            const documents = Array.isArray(value) ? value : [value];
+            return (
+                <div className="flex gap-x-4 gap-y-2 flex-wrap">
+                    {documents.map((document) => (
+                        <a key={document._id} href={document.url.startsWith("uploads/")
+                            ? `${baseUrl}/${document.url}`
+                            : document.url} className="text-blue-400 hover:text-blue-600 hover:text-[15px] transition-all  underline underline-offset-2 px-1 hover:px-0">
+                            {typeof document.name === "string"
+                                ? document.name
+                                : JSON.stringify(document.name)}
+                        </a>
+                    ))}
                 </div>
             );
         }
@@ -109,15 +151,44 @@ function DataTable({ from, title, columns, data, entriesPerPageOptions = [10, 25
 
     return (
         <div className={`${from === "GuestHouse" ? "w-[90%] mb-9" : "w-[95%] my-9 shadow-xs "} mx-auto  bg-white rounded-xl overflow-hidden border border-gray-100`}>
+            {/* Edit Overlay */}
+            {isEditVisible && isAdmin && (
+                <div className="fixed top-0 left-0 w-full h-full bg-gray-100 z-50 overflow-y-auto">
+                    <AdminEditTable
+                        data={dataSource}
+                        columns={columns}
+                        title={title}
+                        tabs={tabs}
+                        activeTab={activeTab}
+                        onSave={handleDataUpdate}
+                        onCancel={toggleEditVisibility}
+                        table={table}
+                        tab={activeTab}
+
+                        from={from}
+                    />
+                </div>
+            )}
+
             {/* Header Section */}
-            <div className="px-6 py-5 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200">
+            <div className="px-6 py-5 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200 relative">
                 <h1 className={`${from === "GuestHouse" ? " text-xl font-bold mb-8 text-gray-600 " : "text-3xl font-bold mb-8 text-[#004080] "}text-3xl font-bold mb-8 text-[#004080] text-center`}>{title}</h1>
+
+                {isAdmin && (
+                    <button
+                        onClick={toggleEditVisibility}
+                        className="absolute top-6 right-[2%] border border-white bg-blue-800 py-0.5 px-1 rounded-md cursor-pointer text-white font-semibold text-xl hover:bg-blue-600"
+                    >
+                        Edit {title}
+                    </button>
+                )}
             </div>
 
             {/* Tabs Section (if tabs are provided) */}
             {tabs && (
                 <div className="border-b border-gray-200">
                     <div className="flex overflow-x-auto">
+                        
                         {tabs.map((tab) => (
                             <button
                                 key={tab.key}
@@ -182,7 +253,7 @@ function DataTable({ from, title, columns, data, entriesPerPageOptions = [10, 25
                             {columns.map((column, index) => (
                                 <th
                                     key={index}
-                                    className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                                    className="px-6 py-3 text-left text-[14px] font-bold text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                                     onClick={() => requestSort(column)}
                                 >
                                     <div className="flex items-center">
@@ -208,11 +279,12 @@ function DataTable({ from, title, columns, data, entriesPerPageOptions = [10, 25
                                     {columns.map((column, colIndex) => (
                                         <td
                                             key={colIndex}
-                                            className={`px-6 py-4 text-sm text-gray-700 ${column.toLowerCase() === 'img'
+                                            className={`px-6 py-4 text-sm font-[500] text-gray-500 ${column.toLowerCase() === 'img'
                                                 ? 'w-20'
                                                 : 'max-w-xs'
                                                 }`}
                                         >
+                                            {console.log("Row Data :", row,"column : ",column,"row[column] :",row[column])}
                                             {renderCellContent(column, row[column])}
                                         </td>
                                     ))}

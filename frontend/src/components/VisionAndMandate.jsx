@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const VisionAndMandate = ({ visionMandate, isAdmin }) => {
+const VisionAndMandate = ({ visionMandate, isAdmin ,userRole }) => {
     const navigate = useNavigate()
 
     const data = visionMandate && visionMandate.length > 0 ? visionMandate[0] : null;
@@ -11,7 +11,7 @@ const VisionAndMandate = ({ visionMandate, isAdmin }) => {
 
             {isAdmin && data && (
                 <button
-                    onClick={() => navigate("/admin/editvision")}
+                    onClick={() => navigate(`${userRole && `/${userRole}/editvision`}`)}
                     className="absolute top-2 right-2 border border-white bg-blue-800 py-0.5 px-1 rounded-md cursor-pointer text-white font-bold text-xl hover:bg-blue-600"
                 >
                     Edit

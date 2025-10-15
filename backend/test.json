@@ -1,0 +1,902 @@
+[
+  {
+    "name": "डॉ. थल्लाडा भास्कर\nDr. Thallada Bhaskar",
+    "designation": "निदेशक\nDirector",
+    "email": "director.ampri@csir.res.in\nthallada.bhaskar@csir.res.in",
+    "intercom": "1113/1114",
+    "office": "2457105",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 1
+  },
+  {
+    "name": "डॉ. पी अशोकन\nDr. P Asokan",
+    "designation": "मुख्य वैज्ञानिक\nChief Scientist",
+    "email": "pasokan.ampri@csir.res.in",
+    "intercom": "1329",
+    "office": "2489402",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 2
+  },
+  {
+    "name": "डॉ. मो. अकरम खान\nDr. Mohd. Akram Khan",
+    "designation": "मुख्य वैज्ञानिक\nChief Scientist",
+    "email": "akram.ampri@csir.res.in",
+    "intercom": "1154",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 3
+  },
+  {
+    "name": "श्री हेमंत कुमार शुक्ला\nMr. Hemant Kumar Shukla",
+    "designation": "मुख्य वैज्ञानिक\nChief Scientist",
+    "email": "hkshukla.ampri@csir.res.in",
+    "intercom": "1416",
+    "office": "2485817",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 4
+  },
+  {
+    "name": "डॉ. मनीष मुदगल\nDr. Manish Mudgal",
+    "designation": "मुख्य वैज्ञानिक\nChief Scientist",
+    "email": "manish.ampri@csir.res.in",
+    "intercom": "1700",
+    "office": "2488562",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 5
+  },
+  {
+    "name": "डॉ. दीप्ति मिश्रा\nDr. Deepti Mishra",
+    "designation": "मुख्य वैज्ञानिक\nChief Scientist",
+    "email": "deepti.ampri@csir.res.in",
+    "intercom": "1142",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 6
+  },
+  {
+    "name": "डॉ. संजीव सक्सेना\nDr. Sanjeev Saxena",
+    "designation": "मुख्य वैज्ञानिक\nChief Scientist",
+    "email": "sanjeev.ampri@csir.res.in",
+    "intercom": "1245",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 7
+  },
+  {
+    "name": "डॉ. एच एन भार्गव\nDr. H N Bhargaw",
+    "designation": "मुख्य वैज्ञानिक\nChief Scientist",
+    "email": "hnbhargaw.ampri@csir.res.in",
+    "intercom": "1117",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 8
+  },
+  {
+    "name": "डॉ. नीता वी एम खलखो\nDr. Neeta V M Khalkho",
+    "designation": "मुख्य वैज्ञानिक\nChief Scientist",
+    "email": "neeta.amp极res.in",
+    "intercom": "1350",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 9
+  },
+  {
+    "name": "डॉ. जे पी चौरसिया\nDr. J P Chaurasia",
+    "designation": "मुख्य वैज्ञानिक\nChief Scientist",
+    "email": "jpchaurasia.ampri@csir.res.in",
+    "intercom": "1353",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 10
+  },
+  {
+    "name": "डॉ. प्रभात कुमार बघेल\nDr. Prabhat Kumar Baghel",
+    "designation": "वरिष्ठ प्रधान वैज्ञानिक\nSenior Principal Scientist",
+    "email": "prabhat.ampri@csir.res.in",
+    "intercom": "1137",
+    "office": "",
+    "table": "极cfedec3ce717c7f0456273",
+    "order": 11
+  },
+  {
+    "name": "डॉ. वंदना\nDr. Vandana",
+    "designation": "वरिष्ठ प्रधान वैज्ञानिक\nSenior Principal Scientist",
+    "email": "vandana.ampri@csir.res.in",
+    "intercom": "1304",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 12
+  },
+  {
+    "name": "डॉ. राजू खान\nDr. Raju Khan",
+    "designation": "वरिष्ठ प्रधान वैज्ञानिक\nSenior Principal Scientist",
+    "email": "raju.ampri@csir.res.in",
+    "intercom": "1301",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 13
+  },
+  {
+    "name": "डॉ. संदीप सिंघई\nDr. Sande极 Singhai",
+    "designation": "वरिष्ठ प्रधान वैज्ञानिक\nSenior Principal Scientist",
+    "email": "sandeep.ampri@csir.res.in",
+    "intercom": "1121",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 14
+  },
+  {
+    "name": "डॉ. आर के भारिल्य\nDr. R K Bharliya",
+    "designation": "वरिष्ठ प्रधान वैज्ञानिक\nSenior Principal Scientist",
+    "email": "rkbharilya.ampri@csir.res.in",
+    "intercom": "1246",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 15
+  },
+  {
+    "name": "डॉ. गौरव कुमार गुप्ता\nDr. Gaurav Kumar Gupta",
+    "designation": "वरिष्ठ प्रधान वैज्ञानिक\nSenior Principal Scientist",
+    "email": "gaurav.ampri@csir.res.in",
+    "inter极": "1123",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 16
+  },
+  {
+    "name": "डॉ. एन सतीश\nDr. N Sathish",
+    "designation": "वरिष्ठ प्रधान वैज्ञानिक\nSenior Principal Scientist",
+    "email": "nsathish.ampri@csir.res.in",
+    "intercom": "1136",
+    "office": "",
+    "table": "68cfedec3ce极17c7f0456273",
+    "order": 17
+  },
+  {
+    "name": "डॉ. सारिका वर्मा\nDr. Sarika Verma",
+    "designation": "वरिष्ठ प्रधान वैज्ञानिक\nSenior Principal Scientist",
+    "email": "sarika.ampri@csir.res.in",
+    "intercom": "1146",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 18
+  },
+  {
+    "name": "डॉ. कीर्ति सोनी\nDr. Kirti Soni",
+    "designation": "वरिष्ठ प्रधान वैज्ञानिक\nSenior Principal Scientist",
+    "email": "kirti.ampri@csir.res.in",
+    "intercom": "1413",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 19
+  },
+  {
+    "name": "डॉ. अर्चना सिंह\nDr. Archana Singh",
+    "designation": "वरिष्ठ प्रधान वैज्ञानिक\nSenior Principal Scientist",
+    "email": "archana.ampri@极sir.res.in",
+    "intercom": "1710",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 20
+  },
+  {
+    "name": "डॉ.नीरज द्विवेदी\nDr. Neeraj Dwivedi",
+    "designation": "वरिष्ठ प्रधान वैज्ञानिक\nSenior Principal Scientist",
+    "email": "neeraj.ampri@csir.res.in",
+    "intercom": "",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 21
+  },
+  {
+    "name": "डॉ. मेराज अहमद\nDr. Meraj Ahmed",
+    "designation": "वरिष्ठ प्रधान वैज्ञानिक\nSenior Principal Scientist",
+    "email": "meraj.ampri@csir.res.in",
+    "intercom": "1241",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 22
+  },
+  {
+    "name": "डॉ. संजय कुमार पंथी\nDr. Sanjay K Panthi",
+    "designation": "वरिष्ठ प्रधान वैज्ञानिक\nSenior Principal Scientist",
+    "email": "sanjay.ampri@csir.res.in",
+    "intercom": "1302",
+    "极": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 23
+  },
+  {
+    "name": "डॉ. राजेश पाटीदार\n极. Rajesh Patidar",
+    "designation": "प्रधान वैज्ञानिक\nPrincipal Scientist",
+    "email": "rajesh.ampri@csir.res.in",
+    "intercom": "1705",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 24
+  },
+  {
+    "name": "डॉ. सतानंद मिश्रा\nDr. Satanand Mishra",
+    "designation": "प्रधान वैज्ञानिक\nPrincipal Scientist",
+    "email": "snmishra.ampri@csir.res.in",
+    "intercom": "1712",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 25
+  },
+  {
+    "name": "डॉ. अल्का मिश्रा\nDr. Alka Mishra",
+    "designation": "प्रधान वैज्ञानिक\nPrincipal Scientist",
+    "email": "alka.ampri@csir.res.in",
+    "intercom": "1327",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 26
+  },
+  {
+    "name": "डॉ. वेंकट ए एन सीएच\nDr. Venkat A N Ch",
+    "designation": "प्रधान वैज्ञानिक\nPrincipal Scientist",
+    "email": "venkat.ampri@csir.res.in",
+    "intercom": "1164",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 27
+  },
+  {
+    "name": "डॉ. चेतना ढांड\nDr. Chetna Dhand",
+    "designation": "प्रधान वैज्ञानिक\nPrincipal Scientist",
+    "email": "chetna.ampri@csir.res.in",
+    "intercom": "1306",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 28
+  },
+  {
+    "name": "डॉ. प्रदीप कुमार\nDr. Pradip Kumar",
+    "designation": "प्रधान वैज्ञानिक\nPrincipal Scientist",
+    "email": "prad极.ampri@csir.res.in",
+    "intercom": "1403",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 29
+  },
+  {
+    "name": "श्री श्रीराम सथैया\nMr. Sriram sathaiah",
+    "designation": "प्रधान वैज्ञानिक\nPrincipal Scientist",
+    "email": "sriram.ampri@csir.res.in",
+    "intercom": "1243",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 30
+  },
+  {
+    "name": "डॉ. मोहम्मद आशिक\nDr. Mohammad Ashiq",
+    "designation": "प्रधान वैज्ञानिक\nPrincipal Scientist",
+    "email": "ashiq.ampri@csir.res.in",
+    "intercom": "1144",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 31
+  },
+  {
+    "name": "डॉ. सुरेंद्र कुमार\nDr. Surender Kumar",
+    "designation": "प्रधान वैज्ञानिक\nPrincipal Scientist",
+    "email": "surender.ampri@csir.res.in",
+    "intercom": "1134",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 32
+  },
+  {
+    "name": "श्री समर्थ सिंह\nMr. Samarth Singh",
+    "designation": "प्रधान वैज्ञानिक\nPrincipal Scientist",
+    "极": "samarth.ampri@csir.res.in",
+    "intercom": "1138",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 33
+  },
+  {
+    "name": "श्री निखिल राजेंद्र गोर्हे\nMr. Nikhil Rajendra Gorhe",
+    "designation": "प्रधान वैज्ञानिक\nPrincipal Scientist",
+    "email": "nikhil.ampri@csir.res.in",
+    "intercom": "1163",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 34
+  },
+  {
+    "name": "डॉ. मनोज कुमार गुप्ता\nDr. Manoj Kumar Gupta",
+    "designation": "प्रधान वैज्ञानिक\nPrincipal Scientist",
+    "email": "mkgupta.ampri@csir.res.in",
+    "intercom": "1242",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 35
+  },
+  {
+    "name": "डॉ. शाबी थंकराज सलम्मल\nDr. Shabi Thankaraj Salammal",
+    "designation": "प्रधान वैज्ञानिक\nPrincipal Scientist",
+    "email": "tsshabi.ampri@csir.res.in",
+    "intercom": "1140",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 36
+  },
+  {
+    "name": "डॉ. अभिषेक पांडे\nDr. Abhishek Pandey",
+    "designation": "वरिष्ठ वैज्ञानिक\nSenior Scientist",
+    "email": "abhishek.ampri@csir.res.in",
+    "intercom": "1243",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 37
+  },
+  {
+    "name": "डॉ. सुप्रिया साहा\nDr. Supriya Saha",
+    "designation": "极रिष्ठ वैज्ञानिक\nSenior Scientist",
+    "email": "supriya.ampri@csir.res.in",
+    "intercom": "1146",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 38
+  },
+  {
+    "name": "डॉ. तिलक चन्द्र जोशी\nDr. Tilak Chandra Joshi",
+    "designation": "वरिष्ठ वैज्ञानिक\nSenior Scientist",
+    "email": "tilak.ampri@csir.res.in",
+    "intercom": "1166",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 39
+  },
+  {
+    "name": "डॉ. मोहित शर्मा\nDr. Moh极 Sharma",
+    "designation": "वरिष्ठ वैज्ञानिक\nSenior Scientist",
+    "email": "mohit.amp极@csir.res.in",
+    "intercom": "1356",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 40
+  },
+  {
+    "name": "श्रीमती मेधा मिली\nMrs. Medha Mili",
+    "designation": "वरिष्ठ वैज्ञानिक\nSenior Scientist",
+    "email": "medha.ampri@csir.res.in",
+    "intercom": "1139",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 41
+  },
+  {
+    "name": "श्री नरेंद्र सिंह\nMr. Narendra Singh",
+    "designation": "वरिष्ठ वैज्ञानिक\nSenior Scientist",
+    "email": "nsingh.ampri@csir.res.in",
+    "intercom": "1354",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 42
+  },
+  {
+    "name": "श्री शिव सिंह पटेल\nMr. Shiv Singh Patel",
+    "designation": "वरिष्ठ वैज्ञानिक\nSenior Scientist",
+    "email": "ssp.ampri@csir.res.in",
+    "intercom": "1410",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 43
+  },
+  {
+    "name": "डॉ. शिव सिंह\nDr. Shiv Singh",
+    "designation": "वरिष्ठ वैज्ञानिक\nSenior Scientist",
+    "email": "sshiv.ampri@csir.res.in",
+    "intercom": "1161",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 44
+  },
+  {
+    "name": "डॉ. दिपेन कुमार रजक\nDr. Dipen Kumar Rajak",
+    "designation": "वैज्ञानिक\nScientist",
+    "email": "dkrajak.ampri@csir.res.in",
+    "intercom": "1160",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 45
+  },
+  {
+    "name": "डॉ. एम. चन्द्र शेखर नायक\nDr. M. Chandra Shekhar Nayak",
+    "designation": "वैज्ञानिक\nScientist",
+    "email": "mcsnayak.ampri@csir.res.in",
+    "intercom": "1234",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 46
+  },
+  {
+    "name": "डॉ. राम कुमार\nDr. Ram Kumar",
+    "designation": "वैज्ञानिक\nScientist",
+    "email": "ram.ampri@csir.res.in",
+    "intercom": "1148",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 47
+  },
+  {
+    "name": "श्री हिमांशू शर्मा\nMr. Himanshu Sharma",
+    "designation": "वैज्ञानिक\nScientist",
+    "email": "himanshu.ampri@csir.res.in",
+    "intercom": "1421",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 48
+  },
+  {
+    "name": "डॉ. तमाल चटार्जी\nDr. Tamal Chatterjee",
+    "designation": "वैज्ञानिक\nScientist",
+    "email": "tamal.ampri@csir.res.in",
+    "intercom": "1149",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 49
+  },
+  {
+    "name": "डॉ. के. कार्तिकेयन\nDr. K. Karthikeyan",
+    "designation": "वैज्ञानिक\nScientist",
+    "email": "karthikeyan.ampri@csir.res.in",
+    "intercom": "",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 50
+  },
+  {
+    "name": "डॉ. अविनाश तिवारी\nDr. Avinash Tiwari",
+    "designation": "वैज्ञानिक\nScientist",
+    "email": "avinash.ampri@csir.res.in",
+    "intercom": "",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 51
+  },
+  {
+    "name": "डॉ. श्रीबालाजी एम.\nDr. Sribalaji M.",
+    "designation": "वैज्ञानिक\nScientist",
+    "email": "sribalaji.ampri@csir.res.in",
+    "intercom": "",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 52
+  },
+  {
+    "name": "डॉ. आर के सोनी\nDr. R K Soni",
+    "designation": "प्रधान तकनीकी अधिकारी\nPrincipal Technical Officer",
+    "email": "rksoni.ampri@csir.res.in",
+    "intercom": "1413",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 53
+  },
+  {
+    "name": "डॉ. ई पीटर्स\nDr.E Peters",
+    "designation": "प्रधान तकनीकी अधिकारी\nPrincipal Technical Officer",
+    "email": "edward.ampri@csir.res.in",
+    "intercom": "1330",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 54
+  },
+  {
+    "name": "श्री मनोज कुमार बान\nShri Manoj Kumar Ban",
+    "designation": "प्रधान तकनीकी अधिकारी\nPrincipal Technical Officer",
+    "email": "mkban.ampri@cs极.res.in",
+    "intercom": "1114",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 55
+  },
+  {
+    "name": "श्री टीएसवीसी राव\nShri TSVC Rao",
+    "designation": "प्रधान तकनीकी अधिकारी\nPrincipal Technical Officer",
+    "email": "tsvc.ampri@csir.res.in",
+    "intercom": "1167",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 56
+  },
+  {
+    "name": "डॉ. प्रभा पद्माकरण\nDr. Prabha Padmakaran",
+    "designation": "प्रधान तकनीकी अधिकारी\nPrincipal Technical Officer",
+    "email": "prabha.ampri@csir.res.in",
+    "intercom": "1152",
+    "office": "",
+    "table": "68cfedec3ce717c7f045627极",
+    "order": 57
+  },
+  {
+    "name": "श्री अनवर अहमद बख्श\nShri Anwar Ahmed Bakhsh",
+    "designation": "Supdt. Engineer/Principal Technical Officer",
+    "email": "aabakhsh.ampri@csir.res.in",
+    "intercom": "1223",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 58
+  },
+  {
+    "name": "श्रीमती संगीत गामड\nMrs. Sangeeta Gam极",
+    "designation": "वरिष्ठ तकनीकी अधिकारी II\nSenior Technical Officer II",
+    "email": "sangeeta.ampri@csir.res.in",
+    "intercom": "1125",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 59
+  },
+  {
+    "name": "श्री ओ पी चोरसिया\nMr. O P Chourasia",
+    "designation": "वरिष्ठ तकनीकी अधिकारी II\nSenior Technical Officer II",
+    "email": "opchaurasia.ampri@csir.res.in",
+    "intercom": "1235",
+    "office": "",
+   "table": "68cfedec3ce717c7f0456273",
+    "order": 60
+  },
+  {
+    "name": "डॉ. सत्यम सैनी\nDr. Satyam Saini",
+    "designation": "Assistant Resident Medical Officer",
+    "email": "satyam.ampri@csir.res.in",
+    "intercom": "1600",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 61
+  },
+  {
+    "name": "श्री डी के कश्यप\nMr. D K Kashyap",
+    "designation": "वरिष्ठ तकनीकी अधिकारी\nSenior Technical Officer",
+    "email": "deepak.ampri@csir.res.in",
+    "intercom": "117极",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 62
+  },
+  {
+    "name": "डॉ. मो. शफीक म\nDr. Mohd Shafeeq M",
+    "designation": "वरिष्ठ तकनीकी अधिकारी\nSenior Technical Officer",
+    "email": "shafeeq.ampri@csir.res.in",
+    "intercom": "1505",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 63
+  },
+  {
+    "name": "श्री बलवंत बरखानिया\nMr. Balwant Barkhaniya",
+    "designation": "वरिष्ठ तकनीकी अधिकारी\nSenior Technical Officer",
+    "email": "balwant.ampri@csir.res.in",
+    "intercom": "1201",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 64
+  },
+  {
+    "name": "श्री अनुप खरे\nMr. An极 Khare",
+    "designation": "वरिष्ठ तकनीकी अधिकारी\nSenior Technical Officer",
+    "email": "anup.ampri@csir.res.in",
+    "intercom": "1143",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 65
+  },
+  {
+    "name": "श्री एन प्रशांत\nMr. N Prashant",
+    "designation": "वरिष्ठ तकनीकी अधिकारी\nSenior Technical Officer",
+    "email": "nprasanth.ampri@csir.res.in",
+    "intercom": "",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 66
+  },
+  {
+    "name": "श्री के के नाकतोडे\nMr. K K Naktode",
+    "designation": "तकनीकी अधिकारी\nTechnical Officer",
+    "email": "kknaktode.ampri@csir.res.in",
+    "intercom": "1506",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 67
+  },
+  {
+    "name": "डॉ. राहुल पिप्पल\nDr. Rahul Pippal",
+    "designation": "तकनीकी अधिकारी\nTechnical Officer",
+    "email": "rahul.ampri@csir.res.in",
+    "intercom": "",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 68
+  },
+  {
+    "name": "श्री ए के असाटी\nMr. A K Asati",
+    "designation": "वरिष्ठ तकनीशियन Gr. II\nSenior Technician Gr. II",
+    "email": "akasati.ampri@csir.res.in",
+    "intercom": "1401",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 69
+  },
+  {
+    "name": "श्रीमती एस पाल\nMrs. S Pal",
+    "designation": "वरिष्ठ तकनीशियन Gr. II\nSenior Technician Gr. II",
+    "email": "sp极.ampri@csir.res.in",
+    "intercom": "1205",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 70
+  },
+  {
+    "name": "श्रीमती अदिति चतुर्वेदी\nMrs. Aditi Chaturved极",
+    "designation": "तकनीशियन I\nTechnician I",
+    "email": "aditi.ampri@csir.res.in",
+    "intercom": "",
+    "office": "",
+    "table": "极cfedec3ce717c7f0456273",
+    "order": 71
+  },
+  {
+    "name": "श्री अमित वासनिक\nMr. Amit Wasnik",
+    "designation": "तकनीशियन I\nTechnician I",
+    "email": "amit.ampri@csir.res.in",
+    "intercom": "",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 72
+  },
+  {
+    "name": "श्री एल एन साहू\nMr. L N Sahu",
+    "designation": "प्रयोगशाला सहायक\nLab Assistant",
+    "email": "laxmi.ampri@csir.res.in",
+    "intercom": "1401",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 73
+  },
+  {
+    "name": "श्री एस के बाथम\nMr. S K Batham",
+    "designation": "प्रयोगशाला सहायक\nLab Assistant",
+    "email": "skbatham.ampri@csir.res.in",
+    "intercom": "1402",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 74
+  },
+  {
+    "name": "श्री एस के रैकवार\nMr. S K Raikwar",
+    "designation": "प्रयोगशाला सहायक\nLab Assistant",
+    "email": "skraikwar.ampri@csir.res.in",
+    "intercom": "1209",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 75
+  },
+  {
+    "name": "श्री रमेश के कवले\nMr. Ramesh K Kawale",
+    "designation": "तकनीशियन\nTechnician",
+    "email": "ramesh.ampri@csir.res.in",
+    "intercom": "",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 76
+  },
+  {
+    "name": "श्री सोमनाथ मज़ूमदर\nMr. Somnath Mazumder",
+    "designation": "प्रशासन नियंत्रक\nController of Administration",
+    "email": "coa.ampri@csir.res.in\ns.mazumder@csir.res.in",
+    "intercom": "1220",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 77
+  },
+  {
+    "name": "श्रीमती मिन极 सुरेंद्रन\nMrs. Mini Surendran",
+    "designation": "प्रधान निजी सचिव\nPrincipal Private Secretary",
+    "email": "mini.surendran@csir.res.in",
+    "intercom": "1113",
+    "office": "2485600",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 78
+  },
+  {
+    "name": "डॉ. मनीषा दुबे\nDr. Manisha Dubey",
+    "designation": "वरिष्ठ हिन्दी अधिकारी\nSenior Hindi Officer",
+    "email": "dubey.manisha@csir.res.in",
+    "intercom": "1233",
+    "office": "2771545",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 79
+  },
+  {
+    "name": "श्री संजय कुमार\nShri Sanjay kumar",
+    "designation": "अनुभाग अधिकारी\nSection Officer",
+    "email": "sanjay.kr@csir.res.in",
+    "intercom": "1226",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 80
+  },
+  {
+    "name": "श्री विजय श्रीवास्तव\nMr. Vijay Shrivastava",
+    "designation": "अनुभाग अधिकारी\nSection Officer",
+    "email": "v.shrivastava@csir.res.in",
+    "intercom": "122极",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 81
+  },
+  {
+    "name": "श्री विवेक खरे\nShri Vivek Khare",
+    "designation": "अनुभाग अधिकारी\nSection Officer",
+    "email": "vive极.khare@csir.res.in",
+    "intercom": "1230",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+   "order": 82
+  },
+  {
+    "name": "श्री गौरवेन्द्र शुक्ल\nShri Goravendra Shukla",
+    "designation": "अनुभाग अधिकारी\nSection Officer",
+    "email": "goravendra.shukla@csir.res.in",
+    "intercom": "1206",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 83
+  },
+  {
+    "name": "श्री आनंद वी पंडित\nMr Anand V Pandit",
+    "designation": "सहायक अनुभाग अधिकारी\nAssistant Section Officer",
+    "email": "av.pandit@csir.res.in",
+    "intercom": "1225",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 84
+  },
+  {
+    "name": "श्री प्रवीण यादव राव जगताप\nMr Pravin Yadav Rao Jagtap",
+    "designation": "极हायक अनुभाग अधिकारी\nAssistant Section Officer",
+    "email": "py.jagtap@csir.res.in",
+    "intercom": "1204",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 85
+  },
+  {
+    "name": "श्री राहुल सिंह चौहान\nMr. Rahul Singh Chouhan",
+    "designation": "सहायक अनुभाग अधिकारी\nAssistant Section Officer",
+    "email": "rs.chouhan@csir.res.in",
+    "intercom": "1227",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 86
+  },
+  {
+    "name": "श्री राहुल लकवाड़\nMr Rahul Lakwar",
+    "designation": "सहायक अनुभाग अधिकारी\nAssistant Section Officer",
+    "email": "rahul.lakwar@csir.res.in",
+    "intercom": "1232",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 87
+  },
+  {
+    "name": "श्री विरेन्द्र मीणा\nMr Virendra Meena",
+    "designation": "सहायक अनुभाग अधिकारी\nAssistant Section Officer",
+    "email": "meena.virendra@csir.res.in",
+    "intercom": "",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 88
+  },
+  {
+    "name": "श्री दीपांशु अहलावत\nMr. Deepanshu Ahlawat",
+    "designation": "सहायक अनुभाग अधिकारी\nAssistant Section Officer",
+    "email": "deepanshu.ahlawat@csir.res.in",
+    "intercom": "",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 89
+  },
+  {
+    "name": "श्रीमती सीमा सिंह रौथण\nMrs. Seema Singh Rauthan",
+    "designation": "वरिष्ठ सचिवालय सहायक\nSenior Secretariat Assistant (Gen)",
+    "email": "seema.rauthan@csir.res.in",
+    "intercom": "1206",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 90
+  },
+  {
+    "name": "Mr. Rohit Kumar",
+    "designation": "कनिष्ठ सचिवालय सहायक\nJunior Secretariat Assistant",
+    "email": "rohit.kumar88770@csir.res.in",
+    "intercom": "",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 91
+  },
+  {
+    "name": "Mr. Brij Mohan Meena",
+    "designation": "कनिष्ठ सचिवालय स极ायक\nJunior Secretariat Assistant",
+    "email": "bm.meena115@csir.res.in",
+    "intercom": "",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 92
+  },
+  {
+    "name": "Mr. Priyans极 Kumar",
+    "designation": "कनिष्ठ सचिवालय सहायक\nJunior Secretariat Assistant",
+    "email": "priyansh.kumar@csir.res.in",
+    "intercom": "",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 93
+  },
+  {
+    "name": "Mr. Sanjit Kumar",
+    "designation": "कनिष्ठ सचिवालय सहायक\nJunior Secretariat Assistant",
+    "email": "sanjit.kumar117@csir.res.in",
+    "intercom": "",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 94
+  },
+  {
+    "name": "Mr. Rakesh Kumar",
+    "designation": "कनिष्ठ सचिवालय सहायक\nJunior Secretariat Assistant",
+    "email": "rakesh.kumar1997@csir.res.in",
+    "intercom": "",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 95
+  },
+  {
+    "name": "Mr. Akash Kumar",
+    "designation": "कनिष्ठ सचिवालय सहायक\nJunior Secretariat Assistant",
+    "email": "akash.kumar8001@csir.res.in",
+    "intercom": "",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 96
+  },
+  {
+    "name": "Mr. Rohit Kumar",
+    "designation": "कनिष्ठ सचिवालय सहायक\nJunior Secretariat Assistant",
+    "email": "rohit.kumar50123@csir.res.in",
+    "intercom": "",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 97
+  },
+  {
+    "name": "Mr. Rahul Madhukar Paunikar",
+    "designation": "कनिष्ठ सचिवालय सहायक\nJunior Secretariat Assistant",
+    "极": "rahul.paunikar@csir.res.in",
+    "intercom": "",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 98
+  },
+  {
+    "name": "श्री अशोक कुमार यादव\nShri Ashok Kumar Yadav",
+    "designation": "भण्डार एवं क्रय अधिकारी\nStore & Purchase Officer",
+    "email": "spo.ampri@csir.res.in\nak.yadav@csir.res.in",
+    "intercom": "1211",
+    "office": "2488355",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 99
+  },
+  {
+    "name": "श्री शैलेन्द्र सिंह तोमर\nMr. Shailendra Singh Tomar",
+    "designation": "अनुभाग अधिकारी\nSection Officer",
+    "email": "ss.tomar@csir.res.in",
+    "intercom": "1204",
+    "office": "",
+    "table": "68cfedec3ce717c7f0456273",
+    "order": 100
+  }
+]

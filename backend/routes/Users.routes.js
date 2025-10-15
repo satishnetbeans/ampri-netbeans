@@ -1,14 +1,37 @@
-// routes/adminRoutes.js
+// routes/AllUsers.js
 
 // @ts-nocheck
 
 import express from "express";
 import jwt from "jsonwebtoken";
-import Admin from "../models/admin.model.js";
+import Admin from "../models/Users.model.js";
 
 import { authAdmin } from "../middlewares/jwtAuth.js";
 
+import { createLog } from "../utils/getClientInfo.js";
+import { getClientInfo } from "../utils/getClientInfo.js";
+
+import {
+  createUser,
+  updateUser,
+  deleteUser,
+} from "../controllers/Users.controllers.js";
+
 const adminRouter = express.Router();
+
+adminRouter.post("/", createUser);
+adminRouter.put("/:id", updateUser);
+adminRouter.delete("/:id", deleteUser);
+
+adminRouter.get("/", async (req, res) => {
+  try {
+    console.log("fetching ..........");
+    const users = await Admin.find();
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 // Developer-only route to create an Admin
 adminRouter.post("/create", async (req, res) => {
@@ -31,12 +54,10 @@ adminRouter.post("/create", async (req, res) => {
 });
 
 // Admin login route
-adminRouter.post("/login", async (req, res) => {
+adminRouter.post("/login", async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    console.log("Login attempt:", req.body);
- 
     // check if admin exists
     const admin = await Admin.findOne({ email });
     if (!admin) {
@@ -51,26 +72,41 @@ adminRouter.post("/login", async (req, res) => {
 
     // generate JWT token
     const token = jwt.sign(
-      { id: admin._id, role: admin.role },
+      {
+        id: admin._id,
+        username: admin.username,
+        email: admin.email,
+        role: admin.role,
+        title: admin.title,
+        access: admin.access,
+        accessModules: admin.accessModules,
+      },
       process.env.JWT_SECRET,
-      { expiresIn: "24h" }
+      { expiresIn: "36h" }
     );
 
     // set cookie
     res.cookie("token", token, {
       httpOnly: true, // prevents JS access (XSS safe)
       secure: process.env.NODE_ENV === "production", // only https in prod
-      sameSite: "strict", // CSRF protection
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // CSRF protection
       maxAge: 60 * 60 * 1000 * 24, // 24 hour
     });
 
+    const siteData = await createLog(req);
+
+    console.log("siteData   : ", siteData);
+
     res.json({
       message: "Login successful",
-      admin: {
+      user: {
         id: admin._id,
         username: admin.username,
         email: admin.email,
         role: admin.role,
+        title: admin.title,
+        access: admin.access,
+        accessModules: admin.accessModules,
       },
     });
   } catch (error) {
@@ -82,15 +118,17 @@ adminRouter.post("/login", async (req, res) => {
 adminRouter.post("/logout", (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
-    sameSite: "strict",
-    secure: process.env.NODE_ENV === "production",
+    secure: process.env.NODE_ENV === "production", // same settings as when you set it
+    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
   });
   res.json({ message: "Logged out successfully" });
 });
 
 // Check if admin is logged in
-adminRouter.get("/check-auth", authAdmin, (req, res) => {
-  res.json({ isAdmin: true, admin: req.user });
+adminRouter.get("/check-auth/:userVisited", authAdmin, (req, res) => {
+  const { userAgent, ip } = getClientInfo(req);
+
+  res.json({ isAdmin: true, user: req.user, deviceInfo: { userAgent, ip } });
 });
 
 export default adminRouter;

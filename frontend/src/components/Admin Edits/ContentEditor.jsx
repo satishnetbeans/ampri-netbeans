@@ -77,7 +77,7 @@ function ContentItem({ item, onUpdate, onDelete }) {
     setIsUploading(true);
     const formData = new FormData();
     formData.append('file', file);
-    
+
     // Debug: Check FormData contents
     for (let [key, value] of formData.entries()) {
       console.log(key, value);
@@ -85,6 +85,8 @@ function ContentItem({ item, onUpdate, onDelete }) {
 
     try {
       const { data, error } = await createUpload(formData);
+
+      console.log('Upload response:', data, error);
 
       if (!error && data) {
         onUpdate(item._id, {
@@ -419,15 +421,17 @@ export default function ContentEditor({ content, onAddContent, onUpdateContent, 
     setIsUploading(true);
     const formData = new FormData();
     formData.append('file', file);
-    console.log("uploaaaaaaaaaaading      :  ",file)
+    console.log("uploaaaaaaaaaaading      :  ", file)
     // Debug: Check FormData contents
     for (let [key, value] of formData.entries()) {
       console.log(key, value);
     }
-    console.log("i am form data       :  ",formData)
+    console.log("i am form data       :  ", formData)
 
     try {
       const { data, error } = await createUpload(formData);
+
+      console.log('Upload response 2 :', data, error);
 
       if (!error && data) {
         const contentItem = {
@@ -553,3 +557,4 @@ export default function ContentEditor({ content, onAddContent, onUpdateContent, 
     </div>
   );
 }
+

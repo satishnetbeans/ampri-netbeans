@@ -1,91 +1,30 @@
 // @ts-nocheck
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { ArrowBigLeft } from "lucide-react";
 
-const navItems = [
-  {
-    label: "HOME",
-    href: "/",
-  },
+import { useUserData } from "../../context/UserDataContext";
+import StructureRoleRoute from "../../utils/StructureRoleRoute";
 
-  {
-    label: "ABOUT",
-    href: "/about",
-    children: [
-      { label: "About CSIR-AMPRI", href: "/about" },
-      { label: "Organization", href: "/about/Organization" },
-      { label: "Research Council", href: "/about/research-council" },
-      { label: "Management Council", href: "/about/management-council" },
-      { label: "Staff Information", href: "/about/staff-page" },
-      { label: "Former Directors", href: "/about/former-directors" },
-    ],
-  },
 
-  {
-    label: "RESEARCH",
-    href: "/",
-    children: [
-      { label: "Light Weight Materials Division (LWMD)", href: "/research/LWMD" },
-      { label: "Sustainable Construction Materials Division (SCMD)", href: "/research/SCMD" },
-      { label: "Functional Materials and Composites Division (FMCD)", href: "/research/FMCD" },
-      { label: "Energy and Environmental Solutions Division (EESD)", href: "/research/EESD" },
-      { label: "Intelligent Materials and Devices Division (IMDD)", href: "/research/IMDD" },
-      { label: "Innovative Materials and Processes Division (IMPD)", href: "/research/IMPD" },
-    ],
-  },
 
-  {
-    label: "R&D MANAGEMENT",
-    href: "/r&d-Management",
-    children: [
-      { label: "Technology/Knowhow", href: "/r&d-Management/Technology-Knowhow" },
-      { label: "Memorandum of Understanding", href: "/r&d-Management/MOU" },
-    ],
-  },
 
-  {
-    label: "TENDER'S",
-    href: "/tender",
-  },
-
-  {
-    label: "DIRECTORY",
-    href: "/directory",
-    children: [
-      { label: "CSIR – Directory", href: "https://www.csir.res.in/council-scientific-and-industrial-research-anusandhan-bhawan" },
-    ],
-  },
-
-  {
-    label: "GALLERY",
-    href: "/gallery",
-  },
-
-  {
-    label: "SERVICES",
-    href: "/",
-    children: [
-      { label: "Human Resource Development", href: "/services/HR" },
-      { label: "ISTAG", href: "/services/ISTAG" },
-      { label: "Dispensary", href: "/services/Dispensary" },
-      { label: "Guest house", href: "/services/guest-house" },
-      { label: "Rajbhasha Cell", href: "/services/rajbhasha-cell" },
-      { label: "Administration", href: "/services/administration" },
-      { label: "Director’s Secretariat", href: "/services/director-secretariat" },
-      { label: "Workshop", href: "/services/Workshop" },
-      { label: "Engineering Services", href: "/services/engineering-services" },
-    ],
-  },
-
-  {
-    label: "CSR",
-    href: "/csr",
-  },
-];
 
 const Navbar = ({ isAdmin }) => {
+  const navigate = useNavigate()
   const currentPath = useLocation().pathname;
-  console.log("Current Path:", currentPath);
+
+  const { UserData } = useUserData();
+
+  const [role, setrole] = useState(null);
+
+  useEffect(() => {
+    if (UserData) {
+      const rl = StructureRoleRoute(UserData);
+      rl && setrole(rl);
+    }
+  }, [UserData]);
 
   const [hovered, setHovered] = useState(null);
   const [dropdownPos, setDropdownPos] = useState({ left: 0 });
@@ -97,9 +36,101 @@ const Navbar = ({ isAdmin }) => {
 
   const handleLeave = () => setHovered(null);
 
+  const navItems = [
+    {
+      label: "HOME",
+      href: "/",
+    },
+
+    {
+      label: "ABOUT",
+      href: `${role ? `/${role}/about` : `/about`}`,
+      children: [
+        { label: "About CSIR-AMPRI", href: `${role ? `/${role}/about` : `/about`}` },
+        { label: "Organization", href: `${role ? `/${role}/Organization` : `/Organization`}` },
+        { label: "Research Council", href: `${role ? `/${role}/research-council` : `/research-council`}` },
+        { label: "Management Council", href: `${role ? `/${role}/management-council` : `/management-council`}` },
+        { label: "Staff Information", href: `${role ? `/${role}/staff-page` : `/staff-page`}` },
+        { label: "Former Directors", href: `${role ? `/${role}/former-directors` : `/former-directors`}` },
+      ],
+    },
+
+    {
+      label: "RESEARCH",
+      href: "/",
+      children: [
+        { label: "Light Weight Materials Division (LWMD)", href: `${role ? `/${role}/research/LWMD` : `/research/LWMD`}` },
+        { label: "Sustainable Construction Materials Division (SCMD)", href: `${role ? `/${role}/research/SCMD` : `/research/SCMD`}` },
+        { label: "Functional Materials and Composites Division (FMCD)", href: `${role ? `/${role}/research/FMCD` : `/research/FMCD`}` },
+        { label: "Energy and Environmental Solutions Division (EESD)", href: `${role ? `/${role}/research/EESD` : `/research/EESD`}` },
+        { label: "Intelligent Materials and Devices Division (IMDD)", href: `${role ? `/${role}/research/IMDD` : `/research/IMDD`}` },
+        { label: "Innovative Materials and Processes Division (IMPD)", href: `${role ? `/${role}/research/IMPD` : `/research/IMPD`}` },
+      ],
+    },
+
+    {
+      label: "R&D MANAGEMENT",
+      href: `${role ? `/${role}/r&d-Management` : `/r&d-Management`}`,
+      children: [
+        { label: "Technology/Knowhow", href: `${role ? `/${role}/r&d-Management/Technology-Knowhow` : `/r&d-Management/Technology-Knowhow`}` },
+        { label: "Memorandum of Understanding", href: `${role ? `/${role}/r&d-Management/MOU` : `/r&d-Management/MOU`}` },
+      ],
+    },
+
+    {
+      label: "TENDER'S",
+      href: `${role ? `/${role}/tender` : `/tender`}`,
+    },
+
+    {
+      label: "DIRECTORY",
+      href: `${role ? `/${role}/directory` : `/directory`}`,
+      children: [
+        { label: "AMPRI – Directory", href: `${role ? `/${role}/directory` : `/directory`}` },
+        { label: "CSIR – Directory", href: "https://www.csir.res.in/council-scientific-and-industrial-research-anusandhan-bhawan" },
+      ],
+    },
+
+    {
+      label: "GALLERY",
+      href: `${role ? `/${role}/gallery` : `/gallery`}`,
+    },
+
+    {
+      label: "SERVICES",
+      href: "/",
+      children: [
+        { label: "Human Resource Development", href: `${role ? `/${role}/services/HR` : `/services/HR`}` },
+        { label: "ISTAG", href: `${role ? `/${role}/services/ISTAG` : `/services/ISTAG`}` },
+        { label: "Dispensary", href: `${role ? `/${role}/services/Dispensary` : `/services/Dispensary`}` },
+        { label: "Guest house", href: `${role ? `/${role}/services/guest-house` : `/services/guest-house`}` },
+        { label: "Rajbhasha Cell", href: `${role ? `/${role}/services/rajbhasha-cell` : `/services/rajbhasha-cell`}` },
+        { label: "Administration", href: `${role ? `/${role}/services/administration` : `/services/administration`}` },
+        { label: "Director’s Secretariat", href: `${role ? `/${role}/services/director-secretariat` : `/services/director-secretariat`}` },
+        { label: "Workshop", href: `${role ? `/${role}/services/Workshop` : `/services/Workshop`}` },
+        { label: "Engineering Services", href: `${role ? `/${role}/services/engineering-services` : `/services/engineering-services`}` },
+      ],
+    },
+
+    {
+      label: "CSR",
+      href: `${role ? `/${role}/csr` : `/csr`}`,
+    },
+  ];
+
   return (
-    <nav className="w-full bg-[#fff] shadow-md">
-      {/* Top Section */}
+    <nav className="w-full bg-[#fff] shadow-md relative">
+
+      {isAdmin && (
+        <button
+          onClick={() => navigate(`${role && `/${role}/dashboard`}`)}
+          className="flex items-center gap-2 absolute top-[22%] z-10 cursor-pointer left-5 bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-medium pl-2 pr-3 py-2 rounded-full shadow-md hover:from-indigo-700 hover:to-blue-800 transition-all duration-300 ease-in-out whitespace-nowrap"
+        >
+          <ArrowBigLeft className="w-5 h-4" />
+          <span className="text-sm">Dashboard</span>
+        </button>
+      )}
+
 
       <div className="relative flex flex-col sm:flex-row items-center sm:items-center justify-evenly  px-4 sm:pl-12 py-3 w-full">
 

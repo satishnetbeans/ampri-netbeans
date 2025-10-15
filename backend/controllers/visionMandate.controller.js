@@ -1,4 +1,4 @@
-import VisionMandate from "../models/visionMandate.model.js";
+import VisionMandate from "../models/homePage/visionMandate.model.js";
 
 // Create new vision/mandate
 export const createVisionMandate = async (req, res) => {

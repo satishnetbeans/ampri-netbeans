@@ -1,9 +1,16 @@
+// @ts-nocheck
 // src/pages/LoginPage.jsx
 import React, { useState } from "react";
 import { api } from "../../api/axios"; // adjust path if needed
 import { useNavigate } from "react-router-dom";
 
-const AdminLogin = () => {
+import { useUserData } from "../../context/UserDataContext";
+import StructureRoleRoute from "../../utils/StructureRoleRoute";
+
+const AdminLogin = ({setIsAdmin}) => {
+  const { updateUserData ,UserData } = useUserData();
+  
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -20,10 +27,14 @@ const AdminLogin = () => {
       const res = await api.post("/admin/login", { email, password });
 
       if (res.data) {
-        console.log(res.data)
+        console.log("user data :",res.data)
+        updateUserData(res.data.user)
+        setIsAdmin(true);
+
+        const role = StructureRoleRoute(res.data.user)
 
         // Redirect to dashboard or admin panel
-        navigate(`/admin`);
+        navigate(`/${role}`);
       }
     } catch (err) {
       console.error(err);

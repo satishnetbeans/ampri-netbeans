@@ -1,27 +1,16 @@
 // @ts-nocheck
-
 // // src/components/admin/ItemEditorModal.jsx
 import React, { useEffect, useState } from 'react';
 import FileInput from './FileInput';
-import { createUpload, updateUpload } from  '../../api/axios';
+import { createUpload, updateUpload } from '../../api/axios';
 import { updateDirector } from '../../api/axios';
 
-/**
- * ItemEditorModal
- * props:
- *  - open (bool)
- *  - onClose()
- *  - initial (object) - existing item or {}
- *  - fields (array) - config: { name, label, type: 'text'|'textarea'|'file'|'url'|'number'|'select', options? }
- *  - section (string) - for uploads create/update
- *  - onSaved(savedItem) - callback
- *
- * NOTE: For uploading director (not in uploads collection) pass `section="director"` and initial with _id absent or null.
- */
+
 export default function ItemEditorModal({ open, onClose, initial = {}, fields = [], section = '', onSaved }) {
   const [form, setForm] = useState({});
   const [files, setFiles] = useState({}); // fieldName -> File
-  console.log("hhhhhhhh",form, files)
+  const [fileType, setfileType] = useState('');
+  console.log("form and files : ", form, fields, files);
 
   useEffect(() => {
     setForm(initial || {});
@@ -30,7 +19,11 @@ export default function ItemEditorModal({ open, onClose, initial = {}, fields = 
 
   if (!open) return null;
 
-  const setField = (name, value) => setForm((p) => ({ ...p, [name]: value }));
+  const setField = (name, value) => setForm((p) => {
+    console.log("setting field", name, value);
+    return { ...p, [name]: value }
+
+  });
 
   const handleFileSelected = (fieldName, file) => {
     setFiles((p) => ({ ...p, [fieldName]: file }));
@@ -54,7 +47,7 @@ export default function ItemEditorModal({ open, onClose, initial = {}, fields = 
             fd.append(f.name, val);
           }
         }
-        await updateDirector(form._id,fd);
+        await updateDirector(form._id, fd);
         onSaved && onSaved();
         onClose && onClose();
         return;
@@ -85,8 +78,19 @@ export default function ItemEditorModal({ open, onClose, initial = {}, fields = 
       let res;
       if (initial && initial._id) {
         res = await updateUpload(initial._id, fd);
+        if (res.data) {
+          alert('Update successful');
+        } else {
+          alert('Update failed');
+        }
+
       } else {
         res = await createUpload(fd);
+        if (res.data) {
+          alert('Creation successful');
+        } else {
+          alert('Creation failed');
+        }
       }
 
       onSaved && onSaved(res.data);
@@ -108,7 +112,7 @@ export default function ItemEditorModal({ open, onClose, initial = {}, fields = 
         <div className="space-y-4">
           {fields.map((f) => {
             const val = form[f.name] ?? '';
-            if (f.type === 'text' || f.type === 'url' || f.type === 'number') {
+            if (f.type === 'text' || f.type === 'url' || f.type === 'number' ) {
               return (
                 <div key={f.name}>
                   <label className="block mb-1 font-medium">{f.label}</label>
@@ -123,12 +127,14 @@ export default function ItemEditorModal({ open, onClose, initial = {}, fields = 
               );
             }
 
+            
+
 
             if (f.type === 'select') {
               return (
                 <div key={f.name}>
                   <label className="block mb-1 font-medium">{f.label}</label>
-                  <select value={val} onChange={(e) => setField(f.name, e.target.value)} className="w-full border p-2 rounded">
+                  <select value={fileType ? fileType : val} className="w-full border p-2 rounded">
                     <option value="">— choose —</option>
                     {(f.options || []).map((opt) => (
                       <option key={opt.value ?? opt} value={opt.value ?? opt}>
@@ -140,15 +146,34 @@ export default function ItemEditorModal({ open, onClose, initial = {}, fields = 
               );
             }
 
+
             if (f.type === 'file') {
               return (
                 <div key={f.name}>
                   <label className="block mb-1 font-medium">{f.label}</label>
-                  {console.log("ffffff : ",f)}
                   <FileInput
                     value={form[f.name] || initial[f.name] || ''}
                     accept={f.accept || 'image/*,video/*'}
                     onFileSelected={(file) => handleFileSelected(f.name, file)}
+                    initial={initial}
+                    fileType={fileType}
+                    setFileType={setfileType}
+                    setField={setField}
+                  />
+                </div>
+              );
+            }
+
+            if (f.type === "textarea") {
+              return (
+                <div key={f.name}>
+                  <label className="block mb-1 font-medium">{f.label}</label>
+                  <textarea
+                    value={val}
+                    onChange={(e) => setField(f.name, e.target.value)}
+                    type={f.type === 'number' ? 'number' : 'text'}
+                    className="w-full h-[15vh] border p-2 rounded"
+                    placeholder={f.placeholder || ''}
                   />
                 </div>
               );

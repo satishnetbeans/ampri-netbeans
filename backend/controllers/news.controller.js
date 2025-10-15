@@ -1,4 +1,4 @@
-import News from "../models/news.model.js";
+import News from "../models/homePage/news.model.js";
 
 // Add news item
 export const createNews = async (req, res) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const DirectorSection = ({ director, isAdmin }) => {
+const DirectorSection = ({ director, isAdmin ,userRole }) => {
     const navigate = useNavigate()
     return (
         <section className="w-[54%] h-full  max-[600px]:w-full max-[600px]:h-auto max-[600px]:border-none">
@@ -56,7 +56,7 @@ const DirectorSection = ({ director, isAdmin }) => {
 
                 <div className='flex border border-gray-300 h-[55%] w-[98%] relative'>
 
-                    {isAdmin && <button onClick={() => navigate('/admin/editdirector')} className='absolute left-[11%] top-2 bg-blue-800 py-1 px-2 rounded-md cursor-pointer text-white font-semibold text-xl  border border-white hover:bg-blue-600'>Edit Director</button>}
+                    {isAdmin && <button onClick={() => navigate(`${userRole && `/${userRole}/editdirector`}`)} className='absolute left-[11%] top-2 bg-blue-800 py-1 px-2 rounded-md cursor-pointer text-white font-semibold text-xl  border border-white hover:bg-blue-600'>Edit Director</button>}
 
                     <div className='flex flex-col items-center gap-5 w-[40%] mt-14 max-[600px]:w-full max-[600px]:mt-20'>
                         <div className='bg-gray-100 max-[600px]:w-[70%] h-40 w-40 rounded-full overflow-hidden'>

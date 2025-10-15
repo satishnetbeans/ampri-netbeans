@@ -1,4 +1,5 @@
-import Notification from "../models/notifications.js";
+// @ts-nocheck
+import Notification from "../models/homePage/notifications.js";
 
 // Add Notification item
 export const createNotification = async (req, res) => {

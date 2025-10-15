@@ -1,15 +1,16 @@
+// @ts-nocheck
 import React from "react"
 import Navbar from "../../components/ui/Navbar"
 import Topbar from "../../components/ui/Topbar"
 import Footer from "../../components/ui/Footer"
 
-function ScreenReaderAccess() {
+function ScreenReaderAccess({isAdmin}) {
 
 
     return (
         <div>
-            <Topbar />
-            <Navbar />
+            <Topbar isAdmin={isAdmin}/>
+            <Navbar isAdmin={isAdmin}/>
 
             <div className="container mx-auto p-6 rounded-lg bg-white min-h-[500px]">
                 {/* Title */}
