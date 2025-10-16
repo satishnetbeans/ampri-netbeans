@@ -45,6 +45,8 @@ export const updateDirector = async (req, res) => {
     const { name, designation, message, image } = req.body;
 
 
+    console.log("director body ............... " , req.body)
+    console.log("director file............... " , req.file)
 
     const director = await Director.findById(id);
     if (!director) {

@@ -6,7 +6,7 @@ import VideoHighlight from "./media components/VideoHighlight";
 import { useNavigate } from "react-router-dom";
 
 
-const MediaSection = ({ printMedia, updates, isAdmin ,userRole }) => {
+const MediaSection = ({ printMedia, updates, isAdmin, userRole }) => {
   const navigate = useNavigate()
   return (
     <div className="w-[55%] h-full pt-3 px-4 max-[600px]:px-2 max-[600px]:w-full flex items-center justify-center">
@@ -17,7 +17,6 @@ const MediaSection = ({ printMedia, updates, isAdmin ,userRole }) => {
         {isAdmin && <button onClick={() => navigate(`${userRole && `/${userRole}/edituploads/Print Media`}`)} className='absolute bottom-5 left-[4%] z-20 border border-white bg-blue-800 py-0.5 px-1 rounded-md cursor-pointer text-white  text-md hover:bg-blue-600 max-[600px]:bottom-[73.3%] max-[600px]:left-[65%]'>Edit print media</button>}
 
         {isAdmin && <button onClick={() => navigate(`${userRole && `/${userRole}/edituploads/updates @`}`)} className='absolute bottom-5 right-[4%] z-20 border border-white bg-blue-800 py-0.5 px-1 rounded-md cursor-pointer text-white  text-md hover:bg-blue-600 max-[600px]:bottom-[31.5%] max-[600px]:right-0'>Edit updates @</button>}
-
 
         <div className="text-center max-[6
         00px]:order-1 mt-3 mb-2">

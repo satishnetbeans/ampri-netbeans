@@ -41,6 +41,7 @@ export default function ItemEditorModal({ open, onClose, initial = {}, fields = 
           const val = form[f.name];
           if (f.type === 'file') {
             // attach file under the field name (directorApi expects 'image')
+            console.log("f.name ...................... ", f.name)
             if (files[f.name]) fd.append(f.name, files[f.name]);
             else if (typeof val === 'string') fd.append(f.name, val);
           } else if (val !== undefined) {
@@ -112,7 +113,7 @@ export default function ItemEditorModal({ open, onClose, initial = {}, fields = 
         <div className="space-y-4">
           {fields.map((f) => {
             const val = form[f.name] ?? '';
-            if (f.type === 'text' || f.type === 'url' || f.type === 'number' ) {
+            if (f.type === 'text' || f.type === 'url' || f.type === 'number') {
               return (
                 <div key={f.name}>
                   <label className="block mb-1 font-medium">{f.label}</label>
@@ -127,7 +128,7 @@ export default function ItemEditorModal({ open, onClose, initial = {}, fields = 
               );
             }
 
-            
+
 
 
             if (f.type === 'select') {

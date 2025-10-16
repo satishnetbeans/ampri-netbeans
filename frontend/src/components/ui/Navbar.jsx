@@ -160,9 +160,9 @@ const Navbar = ({ isAdmin }) => {
         {/* Logo */}
         <div>
           <img
-            src="https://ampri.res.in/wp-content/uploads/2018/04/imageedit_1_6030074067.png"
+            src="http://localhost:4001/uploads/4dffb4b65a1efcf498f6efe020ec1f04e77eeb44c995c7cc671b6ad23cd844b0.jpg"
             alt="CSIR-AMPRI"
-            className="h-14 sm:h-20 mx-auto sm:mx-0"
+            className="h-14 sm:h-24 sm:w-[6.6rem] mx-auto sm:mx-0"
           />
         </div>
       </div>

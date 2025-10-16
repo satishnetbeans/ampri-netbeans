@@ -152,7 +152,7 @@ const AdminEditTable = ({ data, columns, title, tabs, activeTab, onCancel, from,
 
     const removeDocument = (rowIndex, column, docIndex) => {
         if (from === "Career") {
-            console.log("innnn : ",docIndex)
+            console.log("innnn : ", docIndex)
             setCareerColumnForDocument(column)
         }
         const updatedData = [...tableData];
@@ -223,6 +223,10 @@ const AdminEditTable = ({ data, columns, title, tabs, activeTab, onCancel, from,
 
     const deleteRow = async (index) => {
         try {
+            const confirmed = window.confirm("do you want to delete the table ?");
+            if (!confirmed) {
+                return;
+            }
             setSavingRow(index);
 
             const rowData = tableData[index];
@@ -410,6 +414,9 @@ const AdminEditTable = ({ data, columns, title, tabs, activeTab, onCancel, from,
                         if (formData) {
                             window.location.reload();
                         }
+                        if(from === "Career" ){
+                            window.location.reload();
+                        }
 
                     }
 
@@ -451,7 +458,7 @@ const AdminEditTable = ({ data, columns, title, tabs, activeTab, onCancel, from,
                 <h1 className="text-2xl font-bold text-center">Edit {title}</h1>
             </div>
 
-            <div className="flex justify-center px-2 space-x-6 font-semibold mb-4">
+            <div className="flex justify-center px-2 space-x-6 font-semibold mb-4 relative">
                 <button
                     onClick={onCancel}
                     className="px-4 py-2 border border-gray-300 rounded-md cursor-pointer text-gray-700 hover:bg-gray-50"
@@ -464,6 +471,8 @@ const AdminEditTable = ({ data, columns, title, tabs, activeTab, onCancel, from,
                 >
                     Add New Row
                 </button>
+
+                {from === "Career" && <span className='absolute text-[12px]  left-0 bottom-0 text-red-500'><span className='text-gray-900 font-bold'>note : </span>columns which contains documents,  update or create one by one.</span>}  
             </div>
 
             <div className="overflow-x-auto w-full rounded-lg shadow">

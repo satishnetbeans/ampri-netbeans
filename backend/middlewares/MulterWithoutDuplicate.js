@@ -14,7 +14,7 @@ export const upload = multer({ storage });
 
 // Middleware to deduplicate by hash
 export const MulterWithoutDuplicate = (req, res, next) => {
-  console.log("MulterWithoutDuplicate middleware triggered");
+  console.log("MulterWithoutDuplicate middleware triggered",req.file);
   // If single file
   if (req.file) {
     req.file.storedPath = processFile(req.file);

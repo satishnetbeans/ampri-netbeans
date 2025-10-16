@@ -13,7 +13,7 @@ const EnlargedImageModel = ({ file, onClose }) => {
             onClick={onClose}
         >
             <div
-                className="bg-white rounded-lg p-4 max-w-3xl w-auto"
+                className="bg-white rounded-lg p-4  "
                 onClick={(e) => e.stopPropagation()}
             >
 
@@ -21,14 +21,17 @@ const EnlargedImageModel = ({ file, onClose }) => {
                     file.fileType === "image" ? (
                         <div
                             key={file._id}
-                            className="relative shadow-lg rounded-lg overflow-hidden cursor-pointer hover:scale-105 transition-transform duration-300 "
+                            className="relative shadow-lg rounded-lg overflow-hidden cursor-pointer hover:scale-105 transition-transform duration-300 w-[50vw] "
 
                         >
-                            <img
-                                src={file.fileUrl}
-                                alt={file.title}
-                                className="w-full max-h-[80vh] object-contain"
-                            />
+                            <div className='w-full max-h-[80vh] overflow-hidden'>
+                                <img
+                                    src={file.fileUrl}
+                                    alt={file.title}
+                                    className="w-full object-fill"
+                                />
+
+                            </div>
                             <h2 className="mt-2 text-center font-semibold text-lg text-gray-800">
                                 {file.title}
                             </h2>
@@ -42,7 +45,7 @@ const EnlargedImageModel = ({ file, onClose }) => {
                                     : file.fileUrl}
                                 className="w-full max-h-[80vh] object-cover  cursor-pointer "
                                 controls
-                                
+
                             />
                             <div className=" w-full bg-black bg-opacity-60 text-white text-sm px-2 py-1 text-center max-[500px]:text-xs">
                                 {file.title}

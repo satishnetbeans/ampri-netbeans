@@ -62,12 +62,15 @@ export const deleteUpload = (id) =>
 
 // director
 export const fetchDirector = () => handleRequest(() => api.get("/director"));
-export const updateDirector = (id, formData) =>
+export const updateDirector = (id, formData) =>{
+  console.log("formdata director ............." ,formData)
+
   handleRequest(() =>
     api.put(`/director/${id}`, formData, {
       headers: { "Content-Type": "multipart/form-data" },
     })
   );
+}
 
 // news
 export const fetchNews = () => handleRequest(() => api.get("/news"));

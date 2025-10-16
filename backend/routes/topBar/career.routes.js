@@ -117,16 +117,17 @@ careerRouter.put(
       const {
         order,
         Positions,
+        ProjectStaff
       } = req.body;
 
-      console.log(!DetailnApplication);
-      console.log(!ProjectStaff);
+      // console.log(!DetailnApplication);
+      // console.log(!ProjectStaff);
 
       console.log("updating career with req.body:", req.body);
       let column = "";
 
       console.log("files   :", req.files);
-
+ 
       let arr = [];
       if ("updateDocumentNames" in req.body) {
         if (typeof req.body.updateDocumentNames === "string") {
@@ -230,10 +231,12 @@ careerRouter.delete("/delete/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
+    console.log("iiiiiiiiiiiii :",id)
+
     const deleted = await careerModel.findByIdAndDelete(id);
     if (!deleted) return res.status(404).json({ error: "Council not found" });
 
-    res.json({ message: "Council deleted successfully" });
+    res.json({ message: "career deleted successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
