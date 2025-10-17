@@ -326,7 +326,7 @@ function App() {
                 <Route path={`/${Role}/tender`} element={<TenderPage isAdmin={checkedRoutes.Tender} />} />
 
                 {/* Admins Pages */}
-                <Route path="/adminLogin" element={<AdminLogin setIsAdmin={setIsAdmin} />} />
+                <Route path="/netbeans" element={<AdminLogin setIsAdmin={setIsAdmin} />} />
 
                 <Route path={`/${Role}/directory`} element={<DirectoryPage isAdmin={checkedRoutes.Directory} />} />
 
@@ -431,7 +431,7 @@ function App() {
                 <Route path={`/${Role}/tender`} element={<TenderPage isAdmin={isAdmin} />} />
 
                 {/* Admins Pages */}
-                <Route path="/adminLogin" element={<AdminLogin setIsAdmin={setIsAdmin} />} />
+                <Route path="/netbeans" element={<AdminLogin setIsAdmin={setIsAdmin} />} />
 
                 <Route path={`/${Role}/directory`} element={<DirectoryPage isAdmin={isAdmin} />} />
 
@@ -539,7 +539,7 @@ function App() {
             <Route path={"/tender"} element={<TenderPage isAdmin={isAdmin} />} />
 
             {/* Admins Pages */}
-            <Route path="/adminLogin" element={<AdminLogin setIsAdmin={setIsAdmin} />} />
+            <Route path="/netbeans" element={<AdminLogin setIsAdmin={setIsAdmin} />} />
 
             <Route path={"/directory"} element={<DirectoryPage isAdmin={isAdmin} />} />
 
@@ -578,4 +578,5 @@ function App() {
     </>
   );
 }
+
 export default App;

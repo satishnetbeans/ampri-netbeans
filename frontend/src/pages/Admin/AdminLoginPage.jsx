@@ -1,46 +1,54 @@
 // @ts-nocheck
 // src/pages/LoginPage.jsx
-import React, { useState } from "react";
+import React, { useState , useRef} from "react";
 import { api } from "../../api/axios"; // adjust path if needed
 import { useNavigate } from "react-router-dom";
 
 import { useUserData } from "../../context/UserDataContext";
 import StructureRoleRoute from "../../utils/StructureRoleRoute";
 
-const AdminLogin = ({setIsAdmin}) => {
-  const { updateUserData ,UserData } = useUserData();
-  
+import ReCAPTCHA from "react-google-recaptcha";
+
+const SITE_KEY = import.meta.env.VITE_CAPTCHA_SITE_KEY; 
+
+const AdminLogin = ({ setIsAdmin }) => {
+  const { updateUserData, UserData } = useUserData();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const recaptchaRef = useRef(null);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-    setLoading(true);
 
+    const token = recaptchaRef.current.getValue(); // get recaptcha token
+    console.log("captcha token ............. : ", token)
+    if (!token) {
+      setError("Please verify you are human!");
+      return;
+    }
+
+    setLoading(true);
     try {
-      const res = await api.post("/admin/login", { email, password });
+      const res = await api.post("/admin/login", { email, password, recaptchaToken: token });
 
       if (res.data) {
-        console.log("user data :",res.data)
-        updateUserData(res.data.user)
+        updateUserData(res.data.user);
         setIsAdmin(true);
-
-        const role = StructureRoleRoute(res.data.user)
-
-        // Redirect to dashboard or admin panel
+        const role = StructureRoleRoute(res.data.user);
         navigate(`/${role}`);
       }
     } catch (err) {
-      console.error(err);
       setError(err.response?.data?.message || "Login failed");
     } finally {
       setLoading(false);
+      recaptchaRef.current.reset(); // reset for next attempt
     }
   };
 
@@ -86,6 +94,9 @@ const AdminLogin = ({setIsAdmin}) => {
             />
           </div>
 
+          {/* reCAPTCHA */}
+          <ReCAPTCHA sitekey={SITE_KEY} ref={recaptchaRef} />
+
           {/* Submit */}
           <button
             type="submit"
@@ -101,4 +112,3 @@ const AdminLogin = ({setIsAdmin}) => {
 };
 
 export default AdminLogin;
-

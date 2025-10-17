@@ -59,6 +59,7 @@ app.use(
   })
 );
 
+
 app.use(express.json());
 app.use(cookieParser()); // ✅ to read cookies from requests
 
@@ -83,7 +84,13 @@ app.use("/uploads", (req, res, next) => {
 });
 
 // Connect DB
-connectDB();
+try {
+  await connectDB();
+} catch (err) {
+  console.error("MongoDB connection failed:", err);
+  process.exit(1);
+}
+
 
 // Routes
 app.use("/upload", uploadrouter);
@@ -121,5 +128,22 @@ app.use( "/siteData",siteDatarouter )
 
 app.use("/galllery",galleryRouter)
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4001;
+
+
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// ✅ Serve React build (frontend) in production
+if (process.env.NODE_ENV === "production") {
+  const frontendPath = path.join(__dirname, "../frontend/dist"); // for Vite
+  app.use(express.static(frontendPath));
+
+  app.get("*", (req, res) =>
+    res.sendFile(path.join(frontendPath, "index.html"))
+  );
+}
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

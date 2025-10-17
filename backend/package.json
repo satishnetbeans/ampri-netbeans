@@ -5,8 +5,10 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon main.js",
     "start": "node main.js",
-    "dev": "nodemon main.js"
+    "serve": "NODE_ENV=production node main.js",
+    "build-client": "cd ../frontend && npm run build"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +23,11 @@
     "jsonwebtoken": "^9.0.2",
     "mime": "^4.1.0",
     "mongoose": "^8.16.4",
-    "multer": "^2.0.2"
+    "multer": "^2.0.2",
+    "qrcode": "^1.5.4",
+    "speakeasy": "^2.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
   }
 }
