@@ -29,9 +29,38 @@ import ContentEditor from './components/Admin Edits/ContentEditor.jsx';
 // topBar Page
 import EventsPage from './pages/topBar/EventsPage.jsx';
 import CareerPage from './pages/topBar/Career@CSIR-AMPRI.jsx';
-import RTIPage from './pages/topBar/RTI.jsx';
 import OfficeMemorandumPage from './pages/topBar/OfficeMemorandum.jsx';
 import ScreenReaderAccess from './pages/topBar/SRA.jsx';
+import RTIPage from './pages/topBar/RTI.jsx';
+// rti pages
+import ParticularsOrgFunctionsDuties from './pages/topBar/RTI Pages/ParticularsOrgFunctionsDuties.jsx';
+import PowerAndDuties from './pages/topBar/RTI Pages/PowerAndDuties.jsx';
+import DecisionMakingProcess from './pages/topBar/RTI Pages/DecisionMakingProcess.jsx';
+import NormsDischargeFunctions from './pages/topBar/RTI Pages/NormsDischargeFunctions.jsx';
+import CategoriesOfDocuments from './pages/topBar/RTI Pages/CategoriesOfDocuments.jsx';
+import StatementOfBodies from './pages/topBar/RTI Pages/StatementOfBodies.jsx';
+import BudgetAllocations from './pages/topBar/RTI Pages/BudgetAllocations.jsx';
+import MonthlyRemuneration from './pages/topBar/RTI Pages/MonthlyRemuneration.jsx';
+import FacilitiesOfObtainingInformation from './pages/topBar/RTI Pages/FacilitiesOfObtainingInformation.jsx';
+import ParticularsOfPublicInformationOfficers from './pages/topBar/RTI Pages/ParticularsOfPublicInformationOfficers.jsx';
+import DisseminationOfInformation from './pages/topBar/RTI Pages/DisseminationOfInformation.jsx';
+import ReceiptnDisposal from './pages/topBar/RTI Pages/Receipt&Disposal.jsx';
+
+// important links pages 
+import AnnualProcurement from './pages/important links/AnnualProcurement.jsx';
+import TechnologyInfo from './pages/important links/TechnologyInfo.jsx';
+import SAIF from './pages/important links/Saif.jsx';
+import KnowledgeBase from './pages/important links/knowledgeBase.jsx';
+import Patents from './pages/important links/knowledge Base/Patents.jsx';
+import TechReadyForCommercial from './pages/important links/knowledge Base/TechReadyForCommercial.jsx';
+// Navigation links pages 
+import SignificantContributions from './pages/Navigation links/performance/SignificantContributions.jsx';
+import OngoingProjects from './pages/Navigation links/performance/OngoingProjects.jsx';
+import SimulationAndModeling from './pages/Navigation links/R&D facilities/SimulationAndModeling.jsx';
+import IIM from './pages/Navigation links/Professional Societies/IIM.jsx';
+import MRSI from './pages/Navigation links/Professional Societies/MRSI.jsx';
+import TSI from './pages/Navigation links/Professional Societies/TSI.jsx';
+
 
 // about pages
 import AboutPage from './pages/about/AboutPage.jsx';
@@ -76,6 +105,15 @@ import GalleryPage from './pages/gallery/PhotoGalleryPage.jsx';
 import VideoGalleryPage from './pages/gallery/VideoGalleryPage.jsx';
 
 import AdminDashboard from './pages/Admin/admin Dashboard/AdminDashboard.jsx';
+
+// footbar pages
+import DailyNewsPapers from './pages/footer/in media/DailyNewsPapers.jsx';
+import WebsitePolicy from './pages/footer/others/WebsitePolicy.jsx';
+import Disclaimer from './pages/footer/others/Disclaimer.jsx';
+import WebPolicyManager from './pages/footer/others/WebPolicyManager.jsx';
+import Sitemap from './pages/footer/others/Sitemap.jsx';
+import AnnualPropertyReturn from './pages/footer/others/AnnualPropertyReturn.jsx';
+import APR2023 from './pages/footer/others/Annual Property Return/APR_2023.jsx';
 
 import {
   fetchUploads,
@@ -158,8 +196,6 @@ function App() {
               : item.fileUrl
           }));
 
-
-
           setUploads(data);
           setBanner(data.filter(item => item.section === 'banner'));
           setFacility(data.filter(item => item.section === 'facility'));
@@ -205,6 +241,12 @@ function App() {
       }
       const res = await checkAdmin(userVisited);
       console.log("checkUser : ", res)
+      // if (res.status !== 200) {
+      //   setIsAdmin(false);
+      //   updateUserData(null)
+      //   return;
+      // }
+
       const { isAdmin, user, deviceInfo } = res
       setIsAdmin(isAdmin);
       updateUserDevice(deviceInfo)
@@ -268,9 +310,7 @@ function App() {
           <Routes>
 
             {restrictedRoutes ?
-
               <>
-
                 {console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh", checkedRoutes)}
 
                 <Route
@@ -290,16 +330,47 @@ function App() {
                       visionMandate={visionMandate}  // 👈 also here
                       isAdmin={checkedRoutes.HomePage}
                       setIsAdmin={setIsAdmin}
+                      role={Role}
                     />
                   }
                 />
+                {/* --- Homepage routes ---- */}
+                {/* important Links routes */}
+                <Route path={`/${Role}/Annual-Procurement`} element={<AnnualProcurement isAdmin={checkedRoutes.HomePage} />} />
+                <Route path={`/${Role}/Technology-Info`} element={<TechnologyInfo isAdmin={checkedRoutes.HomePage} />} />
+                <Route path={`/${Role}/SAIF`} element={<SAIF isAdmin={checkedRoutes.HomePage} />} />
+                <Route path={`/${Role}/Knowledge-Base`} element={<KnowledgeBase isAdmin={checkedRoutes.HomePage} role={Role} />} />
+                <Route path={`/${Role}/Commercialization`} element={<TechReadyForCommercial isAdmin={checkedRoutes.HomePage} role={Role} />} />
+                <Route path={`/${Role}/Patents`} element={<Patents isAdmin={checkedRoutes.HomePage} role={Role} />} />
+                {/* Navigation Links routes */}
+                <Route path={`/${Role}/Significant-Contributions`} element={<SignificantContributions isAdmin={checkedRoutes.HomePage} />} />
+                <Route path={`/${Role}/Ongoing-Projects`} element={<OngoingProjects isAdmin={checkedRoutes.HomePage} />} />
+                <Route path={`/${Role}/Simulation-Modeling`} element={<SimulationAndModeling isAdmin={checkedRoutes.HomePage} />} />
+                <Route path={`/${Role}/MRSI`} element={<MRSI isAdmin={checkedRoutes.HomePage} />} />
+                <Route path={`/${Role}/IIM`} element={<IIM isAdmin={checkedRoutes.HomePage} />} />
+                <Route path={`/${Role}/TSI`} element={<TSI isAdmin={checkedRoutes.HomePage} />} />
 
                 {/* topbar routes */}
                 <Route path={`/${Role}/events`} element={<EventsPage isAdmin={checkedRoutes.Events} />} />
                 <Route path={`/${Role}/career`} element={<CareerPage isAdmin={checkedRoutes.career} />} />
-                <Route path={`/${Role}/RTI`} element={<RTIPage isAdmin={false} />} />
                 <Route path={`/${Role}/officeMemorandum`} element={<OfficeMemorandumPage isAdmin={checkedRoutes["Office Memorandum"]} />} />
-                <Route path={`/${Role}/SRA`} element={<ScreenReaderAccess isAdmin={false} />} />
+                <Route path={`/${Role}/SRA`} element={<ScreenReaderAccess isAdmin={isAdmin} />} />
+
+                <Route path={`/${Role}/RTI`} element={<RTIPage isAdmin={isAdmin} />} />
+                {/* RTI routes */}
+                <Route path={`/${Role}/Particular-Org-Functions-Duties`} element={<ParticularsOrgFunctionsDuties isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/DecisionMakingProcess`} element={<DecisionMakingProcess isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/Norms-Discharge-Functions`} element={<NormsDischargeFunctions isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/CategoriesOfDocuments`} element={<CategoriesOfDocuments isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/BudgetAllocations`} element={<BudgetAllocations isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/FacilitiesOfObtainingInformation`} element={<FacilitiesOfObtainingInformation isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/ParticularsOfPublic-Information-Officers`} element={<ParticularsOfPublicInformationOfficers isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/DisseminationOfInformation`} element={<DisseminationOfInformation isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/Receipt&Disposal`} element={<ReceiptnDisposal isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/StatementOfBodies`} element={<StatementOfBodies isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/Powers-duties`} element={<PowerAndDuties isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/Monthly-Remuneration`} element={<MonthlyRemuneration isAdmin={isAdmin} />} />
+
 
                 {/* about pages */}
                 <Route path={`/${Role}/about`} element={<AboutPage isAdmin={checkedRoutes["About Pages"]} />} />
@@ -346,13 +417,22 @@ function App() {
                 <Route path={`/${Role}/services/Workshop`} element={<Workshop isAdmin={checkedRoutes.Services} />} />
                 <Route path={`/${Role}/services/engineering-services`} element={<EngineeringServices isAdmin={checkedRoutes.Services} />} />
 
-                {(Role === "Super-Admin" || Role === "Admin") && <Route path={`/${Role}/dashboard`} element={<AdminDashboard isAdmin={true} />} />}
+                <Route path={`/${Role}/dashboard`} element={<AdminDashboard isAdmin={true} />} />
 
                 {/* homepage edits*/}
                 <Route path={`/${Role}/edituploads/:section`} element={<EditSectionPage sectionUploads={uploads} isAdmin={checkedRoutes.HomePage} />} />
                 <Route path={`/${Role}/editdirector`} element={<EditDirectorPage director={director} isAdmin={checkedRoutes.HomePage} />} />
                 <Route path={`/${Role}/editnews`} element={<EditNewsPage news={news} isAdmin={checkedRoutes.HomePage} />} />
                 <Route path={`/${Role}/editnotification`} element={<EditNotificationPage notifications={notifications} isAdmin={checkedRoutes.HomePage} />} />
+
+                {/* footbar routes */}
+                <Route path={`/${Role}/Daily-News-Papers`} element={<DailyNewsPapers isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/Website-Policy`} element={<WebsitePolicy isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/Disclaimer`} element={<Disclaimer isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/Web-Policy-Manager`} element={<WebPolicyManager isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/Sitemap`} element={<Sitemap isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/Annual-Property-Return`} element={<AnnualPropertyReturn isAdmin={isAdmin} role={Role} />} />
+                <Route path={`/${Role}/APR2023`} element={<APR2023 isAdmin={isAdmin} />} />
 
                 {/* division */}
                 <Route
@@ -398,12 +478,44 @@ function App() {
                   }
                 />
 
+                {/*  --- Homepage routes ---- */}
+                {/* important Links routes */}
+                <Route path={`/${Role}/Annual-Procurement`} element={<AnnualProcurement isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/Technology-Info`} element={<TechnologyInfo isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/SAIF`} element={<SAIF isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/Knowledge-Base`} element={<KnowledgeBase isAdmin={isAdmin} role={Role} />} />
+                <Route path={`/${Role}/Commercialization`} element={<TechReadyForCommercial isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/Patents`} element={<Patents isAdmin={isAdmin} />} />
+                {/* Navigation Links routes */}
+                <Route path={`/${Role}/Significant-Contributions`} element={<SignificantContributions isAdmin={checkedRoutes.HomePage} />} />
+                <Route path={`/${Role}/Ongoing-Projects`} element={<OngoingProjects isAdmin={checkedRoutes.HomePage} />} />
+                <Route path={`/${Role}/Simulation-Modeling`} element={<SimulationAndModeling isAdmin={checkedRoutes.HomePage} />} />
+                <Route path={`/${Role}/MRSI`} element={<MRSI isAdmin={checkedRoutes.HomePage} />} />
+                <Route path={`/${Role}/IIM`} element={<IIM isAdmin={checkedRoutes.HomePage} />} />
+                <Route path={`/${Role}/TSI`} element={<TSI isAdmin={checkedRoutes.HomePage} />} />
+
+
+
                 {/* topbar routes */}
                 <Route path={`/${Role}/events`} element={<EventsPage isAdmin={isAdmin} />} />
                 <Route path={`/${Role}/career`} element={<CareerPage isAdmin={isAdmin} />} />
-                <Route path={`/${Role}/RTI`} element={<RTIPage isAdmin={isAdmin} />} />
                 <Route path={`/${Role}/officeMemorandum`} element={<OfficeMemorandumPage isAdmin={isAdmin} />} />
                 <Route path={`/${Role}/SRA`} element={<ScreenReaderAccess isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/RTI`} element={<RTIPage isAdmin={isAdmin} />} />
+                {/* RTI routes */}
+                <Route path={`/${Role}/Particular-Org-Functions-Duties`} element={<ParticularsOrgFunctionsDuties isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/DecisionMakingProcess`} element={<DecisionMakingProcess isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/Norms-Discharge-Functions`} element={<NormsDischargeFunctions isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/CategoriesOfDocuments`} element={<CategoriesOfDocuments isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/BudgetAllocations`} element={<BudgetAllocations isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/FacilitiesOfObtainingInformation`} element={<FacilitiesOfObtainingInformation isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/ParticularsOfPublic-Information-Officers`} element={<ParticularsOfPublicInformationOfficers isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/DisseminationOfInformation`} element={<DisseminationOfInformation isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/Receipt&Disposal`} element={<ReceiptnDisposal isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/StatementOfBodies`} element={<StatementOfBodies isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/Powers-duties`} element={<PowerAndDuties isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/Monthly-Remuneration`} element={<MonthlyRemuneration isAdmin={isAdmin} />} />
+
 
                 {/* about pages */}
                 <Route path={`/${Role}/about`} element={<AboutPage isAdmin={isAdmin} />} />
@@ -451,13 +563,23 @@ function App() {
                 <Route path={`/${Role}/services/Workshop`} element={<Workshop isAdmin={isAdmin} />} />
                 <Route path={`/${Role}/services/engineering-services`} element={<EngineeringServices isAdmin={isAdmin} />} />
 
-                {(Role === "Super-Admin" || Role === "Admin") && <Route path={`/${Role}/dashboard`} element={<AdminDashboard isAdmin={isAdmin} />} />}
+                <Route path={`/${Role}/dashboard`} element={<AdminDashboard isAdmin={isAdmin} />} />
 
                 {/* homepage edits*/}
                 <Route path={`/${Role}/edituploads/:section`} element={<EditSectionPage sectionUploads={uploads} isAdmin={isAdmin} />} />
                 <Route path={`/${Role}/editdirector`} element={<EditDirectorPage director={director} isAdmin={isAdmin} />} />
                 <Route path={`/${Role}/editnews`} element={<EditNewsPage news={news} isAdmin={isAdmin} />} />
                 <Route path={`/${Role}/editnotification`} element={<EditNotificationPage notifications={notifications} isAdmin={isAdmin} />} />
+
+                {/* footbar routes */}
+                <Route path={`/${Role}/Daily-News-Papers`} element={<DailyNewsPapers isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/Website-Policy`} element={<WebsitePolicy isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/Disclaimer`} element={<Disclaimer isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/Web-Policy-Manager`} element={<WebPolicyManager isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/Sitemap`} element={<Sitemap isAdmin={isAdmin} />} />
+                <Route path={`/${Role}/Annual-Property-Return`} element={<AnnualPropertyReturn isAdmin={isAdmin} role={Role} />} />
+                <Route path={`/${Role}/APR2023`} element={<APR2023 isAdmin={isAdmin} />} />
+
 
                 {/* division */}
                 <Route
@@ -501,17 +623,48 @@ function App() {
                   visionMandate={visionMandate}   // 👈 pass to homepage
                   isAdmin={isAdmin}
                   setIsAdmin={setIsAdmin}
+
+                  role={null}
                 />
               }
             />
+
+            {/* important Links routes */}
+            <Route path={`/Annual-Procurement`} element={<AnnualProcurement isAdmin={isAdmin} />} />
+            <Route path={`/Technology-Info`} element={<TechnologyInfo isAdmin={isAdmin} />} />
+            <Route path={`/SAIF`} element={<SAIF isAdmin={isAdmin} />} />
+            <Route path={`/Knowledge-Base`} element={<KnowledgeBase isAdmin={isAdmin} role={null} />} />
+            <Route path={`/Commercialization`} element={<TechReadyForCommercial isAdmin={isAdmin} />} />
+            <Route path={`/Patents`} element={<Patents isAdmin={isAdmin} />} />
+            {/* Navigation Links routes */}
+            <Route path={`/Significant-Contributions`} element={<SignificantContributions isAdmin={isAdmin} />} />
+            <Route path={`/Ongoing-Projects`} element={<OngoingProjects isAdmin={isAdmin} />} />
+            <Route path={`/Simulation-Modeling`} element={<SimulationAndModeling isAdmin={isAdmin} />} />
+            <Route path={`/MRSI`} element={<MRSI isAdmin={isAdmin} />} />
+            <Route path={`/IIM`} element={<IIM isAdmin={isAdmin} />} />
+            <Route path={`/TSI`} element={<TSI isAdmin={isAdmin} />} />
 
 
             {/* topbar routes */}
             <Route path="/events" element={<EventsPage isAdmin={isAdmin} />} />
             <Route path="/career" element={<CareerPage isAdmin={isAdmin} />} />
-            <Route path="/RTI" element={<RTIPage isAdmin={isAdmin} />} />
             <Route path="/officeMemorandum" element={<OfficeMemorandumPage isAdmin={isAdmin} />} />
             <Route path="/SRA" element={<ScreenReaderAccess isAdmin={isAdmin} />} />
+            <Route path="/RTI" element={<RTIPage isAdmin={isAdmin} />} />
+            {/* RTI routes */}
+            <Route path="/Particular-Org-Functions-Duties" element={<ParticularsOrgFunctionsDuties isAdmin={isAdmin} />} />
+            <Route path={`/DecisionMakingProcess`} element={<DecisionMakingProcess isAdmin={isAdmin} />} />
+            <Route path="/Norms-Discharge-Functions" element={<NormsDischargeFunctions isAdmin={isAdmin} />} />
+            <Route path="/CategoriesOfDocuments" element={<CategoriesOfDocuments isAdmin={isAdmin} />} />
+            <Route path="/BudgetAllocations" element={<BudgetAllocations isAdmin={isAdmin} />} />
+            <Route path="/FacilitiesOfObtainingInformation" element={<FacilitiesOfObtainingInformation isAdmin={isAdmin} />} />
+            <Route path="/ParticularsOfPublic-Information-Officers" element={<ParticularsOfPublicInformationOfficers isAdmin={isAdmin} />} />
+            <Route path="/DisseminationOfInformation" element={<DisseminationOfInformation isAdmin={isAdmin} />} />
+            <Route path="/Receipt&Disposal" element={<ReceiptnDisposal isAdmin={isAdmin} />} />
+            <Route path="/StatementOfBodies" element={<StatementOfBodies isAdmin={isAdmin} />} />
+            <Route path="/Powers-duties" element={<PowerAndDuties isAdmin={isAdmin} />} />
+            <Route path="/Monthly-Remuneration" element={<MonthlyRemuneration isAdmin={isAdmin} />} />
+
 
             {/* about pages */}
             <Route path={"/about"} element={<AboutPage isAdmin={isAdmin} />} />
@@ -558,6 +711,15 @@ function App() {
             <Route path="/services/administration" element={<Administration isAdmin={isAdmin} />} />
             <Route path="/services/Workshop" element={<Workshop isAdmin={isAdmin} />} />
             <Route path="/services/engineering-services" element={<EngineeringServices isAdmin={isAdmin} />} />
+
+            {/* footbar routes */}
+            <Route path={`/Daily-News-Papers`} element={<DailyNewsPapers isAdmin={isAdmin} />} />
+            <Route path={`/Website-Policy`} element={<WebsitePolicy isAdmin={isAdmin} />} />
+            <Route path={`/Disclaimer`} element={<Disclaimer isAdmin={isAdmin} />} />
+            <Route path={`/Web-Policy-Manager`} element={<WebPolicyManager isAdmin={isAdmin} />} />
+            <Route path={`/Sitemap`} element={<Sitemap isAdmin={isAdmin} />} />
+            <Route path={`/Annual-Property-Return`} element={<AnnualPropertyReturn isAdmin={isAdmin} />} />
+            <Route path={`/APR2023`} element={<APR2023 isAdmin={isAdmin} role={null}/>} />
 
             <Route path="/division" element={<DemoDivisionPage />} />
 

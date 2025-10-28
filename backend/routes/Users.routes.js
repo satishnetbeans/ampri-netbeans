@@ -6,7 +6,11 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import Admin from "../models/Users.model.js";
 
+import speakeasy from "speakeasy";
+import QRCode from "qrcode";
+
 import { authAdmin } from "../middlewares/jwtAuth.js";
+import { generateAndSetCookieToken } from "../utils/genrateAndSetCookieToken.js";
 
 import { createLog } from "../utils/getClientInfo.js";
 import { getClientInfo } from "../utils/getClientInfo.js";
@@ -31,6 +35,48 @@ adminRouter.get("/", async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+});
+
+// disable 2FA
+adminRouter.post("/disable-2fa", async (req, res) => {
+  console.log("disable 2FA bodyyyyyyy :", req.body);
+  const { email } = req.body;
+
+  const user = await Admin.findOneAndUpdate(
+    { email },
+    { $unset: { twoFASecret: "" }, $set: { is2FAEnabled: false } },
+    { new: true } // ✅ returns updated user
+  );
+
+  const token = generateAndSetCookieToken(res, user);
+  res.json({
+    message: "2FA disabled successfully.",
+    user: {
+      id: user._id,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      title: user.title,
+      access: user.access,
+      accessModules: user.accessModules,
+      is2FAEnabled: user.is2FAEnabled,
+    },
+  });
+});
+
+// create secrete for 2FA of Google Authenticator
+adminRouter.post("/setup-2fa", async (req, res) => {
+  const { email } = req.body;
+  console.log("bodyyyyyyy :", req.body);
+  const secret = speakeasy.generateSecret({ name: "MyApp (" + email + ")" });
+
+  // Save secret.base32 in user's DB
+  await Admin.updateOne({ email }, { $set: { twoFASecret: secret.base32 } });
+
+  // Generate QR code for Google Authenticator
+  QRCode.toDataURL(secret.otpauth_url, (err, data_url) => {
+    res.json({ qrCode: data_url });
+  });
 });
 
 // Developer-only route to create an Admin
@@ -71,27 +117,8 @@ adminRouter.post("/login", async (req, res, next) => {
     }
 
     // generate JWT token
-    const token = jwt.sign(
-      {
-        id: admin._id,
-        username: admin.username,
-        email: admin.email,
-        role: admin.role,
-        title: admin.title,
-        access: admin.access,
-        accessModules: admin.accessModules,
-      },
-      process.env.JWT_SECRET,
-      { expiresIn: "36h" }
-    );
 
-    // set cookie
-    res.cookie("token", token, {
-      httpOnly: true, // prevents JS access (XSS safe)
-      secure: process.env.NODE_ENV === "production", // only https in prod
-      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // CSRF protection
-      maxAge: 60 * 60 * 1000 * 24, // 24 hour
-    });
+    const token = generateAndSetCookieToken(res, admin);
 
     const siteData = await createLog(req);
 
@@ -107,11 +134,55 @@ adminRouter.post("/login", async (req, res, next) => {
         title: admin.title,
         access: admin.access,
         accessModules: admin.accessModules,
+        is2FAEnabled: admin.is2FAEnabled,
       },
     });
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ message: "Error logging in", error });
+  }
+});
+// verify 2FA Using Google Authenticator
+adminRouter.post("/verify-2fa", async (req, res) => {
+  const { email, token } = req.body;
+
+  console.log("verifyyyyyyyyyy  : ", req.body);
+ 
+  const user = await Admin.findOne({ email });
+
+  const verified = speakeasy.totp.verify({
+    secret: user.twoFASecret,
+    encoding: "base32",
+    token,
+    window: 1, // allows ±30s window
+  });
+
+  console.log("verifyyyyyyyyyy  : ", verified);
+
+  if (verified) {
+    const admin = await Admin.findOneAndUpdate(
+      { email },
+      { $set: { is2FAEnabled: true } },
+      { new: true } // ✅ returns updated user
+    );
+
+    const token = generateAndSetCookieToken(res, admin);
+    res.json({
+      message: "2FA verified, login success",
+      success: verified,
+      user: {
+        id: admin._id,
+        username: admin.username,
+        email: admin.email,
+        role: admin.role,
+        title: admin.title,
+        access: admin.access,
+        accessModules: admin.accessModules,
+        is2FAEnabled: admin.is2FAEnabled,
+      },
+    });
+  } else {
+    res.status(400).json({ message: "Invalid 2FA code" });
   }
 });
 

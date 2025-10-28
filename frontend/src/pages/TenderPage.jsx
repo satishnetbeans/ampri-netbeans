@@ -18,6 +18,7 @@ function TendersPage({ isAdmin }) {
   useEffect(() => async () => {
     try {
       const res = await fetchTender();
+      console.log("fetched tender resssssssssssssssssssssssss .......: " ,res)
       if (res.data && res.data.length > 0) {
         const fieldMapping = {
           "Title / Name of Work": "title",

@@ -15,8 +15,18 @@ ampriDirectoryRouter.get("/", async (req, res) => {
 
 ampriDirectoryRouter.post("/", async (req, res) => {
   try {
-    const { order, name, designation, email, INTERCOM, OFFICE, table } =
-      req.body;
+    const {
+      order,
+      name,
+      designation,
+      email,
+      INTERCOM,
+      OFFICE,
+      duties,
+      payLevel,
+      basicPay,
+      table,
+    } = req.body;
 
     console.log("Creating ampri directory with req.body:", req.body);
 
@@ -28,13 +38,16 @@ ampriDirectoryRouter.post("/", async (req, res) => {
     }
     const intOrder = parseInt(order, 10);
     const updatedToUpadte = {
-      order :intOrder,
+      order: intOrder,
       name,
       designation,
       email,
       intercom: INTERCOM,
       office: OFFICE,
-      table
+      duties,
+      payLevel,
+      basicPay,
+      table,
     };
 
     const council = new ampriDirectoryModel(updatedToUpadte);
@@ -49,7 +62,17 @@ ampriDirectoryRouter.post("/", async (req, res) => {
 ampriDirectoryRouter.put("/update/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { order, name, designation, email, INTERCOM, OFFICE } = req.body;
+    const {
+      order,
+      name,
+      designation,
+      email,
+      INTERCOM,
+      OFFICE,
+      duties,
+      payLevel,
+      basicPay,
+    } = req.body;
 
     // Optional check: at least one field should be provided
     if (
@@ -58,7 +81,10 @@ ampriDirectoryRouter.put("/update/:id", async (req, res) => {
       designation === undefined &&
       email === undefined &&
       INTERCOM === undefined &&
-      OFFICE === undefined
+      OFFICE === undefined &&
+      duties === undefined &&
+      payLevel === undefined &&
+      basicPay === undefined
     ) {
       return res
         .status(400)
@@ -72,6 +98,9 @@ ampriDirectoryRouter.put("/update/:id", async (req, res) => {
       email,
       intercom: INTERCOM,
       office: OFFICE,
+      duties,
+      payLevel,
+      basicPay,
     };
 
     const updated = await ampriDirectoryModel.findByIdAndUpdate(
@@ -89,6 +118,7 @@ ampriDirectoryRouter.put("/update/:id", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
 ampriDirectoryRouter.delete("/delete/:id", async (req, res) => {
   try {
     const { id } = req.params;

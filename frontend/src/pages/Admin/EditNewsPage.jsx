@@ -86,10 +86,10 @@ export default function EditNewsPage({ news }) {
             {/* News list */}
             <div className="space-y-3">
                 {items.map((it) => (
-                    <div key={it._id} className="flex items-center gap-4 border rounded p-2">
+                    <div key={it?._id} className="flex items-center gap-4 border rounded p-2">
                         <div className="flex-1">
-                            <div className="font-medium">{it.title}</div>
-                            <div className="text-sm text-gray-600">{it.link}</div>
+                            <div className="font-medium">{it?.title}</div>
+                            <div className="text-sm text-gray-600">{it?.link}</div>
                         </div>
                         <div className="flex gap-2">
                             <button
@@ -111,4 +111,3 @@ export default function EditNewsPage({ news }) {
         </div>
     );
 }
-

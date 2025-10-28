@@ -4,10 +4,15 @@ import News from "../models/homePage/news.model.js";
 export const createNews = async (req, res) => {
   try {
     const { title, link, date } = req.body;
+    if (!title || !link) {
+      return res.status(400).json({ message: "Title and link are required" });
+    }
     const news = await News.create({ title, link, date });
     res.status(201).json(news);
   } catch (error) {
-    res.status(500).json({ message: 'Error creating news item', error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error creating news item", error: error.message });
   }
 };
 
@@ -17,7 +22,9 @@ export const getAllNews = async (req, res) => {
     const newsList = await News.find().sort({ date: -1 });
     res.json(newsList);
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching news', error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error fetching news", error: error.message });
   }
 };
 
@@ -39,7 +46,9 @@ export const updateNews = async (req, res) => {
 
     res.json(news);
   } catch (error) {
-    res.status(500).json({ message: "Error updating news", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error updating news", error: error.message });
   }
 };
 
@@ -48,9 +57,11 @@ export const deleteNews = async (req, res) => {
   try {
     const { id } = req.params;
     const news = await News.findByIdAndDelete(id);
-    if (!news) return res.status(404).json({ message: 'News not found' });
-    res.json({ message: 'News deleted successfully' });
+    if (!news) return res.status(404).json({ message: "News not found" });
+    res.json({ message: "News deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: 'Error deleting news', error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error deleting news", error: error.message });
   }
 };

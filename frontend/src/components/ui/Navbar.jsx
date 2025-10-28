@@ -2,16 +2,20 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { ArrowBigLeft } from "lucide-react";
+import { ArrowBigLeft, Upload } from "lucide-react";
 
 import { useUserData } from "../../context/UserDataContext";
 import StructureRoleRoute from "../../utils/StructureRoleRoute";
 
+import { fetchNavLogos, UpdateNavLogos, fileUpload } from "../../api/axios";
 
+import checkBaseURL from "../../utils/CheckBaseUrl";
 
 
 
 const Navbar = ({ isAdmin }) => {
+  const baseUrl = checkBaseURL();
+
   const navigate = useNavigate()
   const currentPath = useLocation().pathname;
 
@@ -19,11 +23,29 @@ const Navbar = ({ isAdmin }) => {
 
   const [role, setrole] = useState(null);
 
+  const [navLogos, setnavLogos] = useState(null);
+
+
   useEffect(() => {
     if (UserData) {
       const rl = StructureRoleRoute(UserData);
       rl && setrole(rl);
     }
+
+    const fetchLogos = async () => {
+      try {
+        const response = await fetchNavLogos();
+        console.log("NavLogos fetched .. :", response);
+        if (response.data) {
+          setnavLogos(response.data[0]);
+        }
+      } catch (error) {
+        console.error("Error fetching important links:", error);
+      }
+    }
+
+    fetchLogos();
+
   }, [UserData]);
 
   const [hovered, setHovered] = useState(null);
@@ -118,28 +140,73 @@ const Navbar = ({ isAdmin }) => {
     },
   ];
 
+  const handleImageChange = async (e, type) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await fileUpload(formData);
+
+      console.log("file upload response : ", response);
+
+      if (response.error) throw new Error("Upload failed");
+
+      const result = await response.data;
+      const filePath = result.path || result.filePath;
+      let updatedLogos = { ...navLogos };
+      if (type === "main")
+        updatedLogos.MainLogo = { imageLink: filePath };
+      else if (type === "pre")
+        updatedLogos.preLogo = { imageLink: filePath };
+      const updateResponse = await UpdateNavLogos(navLogos._id, updatedLogos);
+      console.log("NavLogos update response : ", updateResponse);
+      if (updateResponse.data) {
+        setnavLogos(updateResponse.data.updated);
+      }
+
+    } catch (error) {
+      console.error("Upload error:", error);
+      alert("File upload failed");
+    }
+  }
+
+
+
   return (
     <nav className="w-full bg-[#fff] shadow-md relative">
 
       {isAdmin && (
         <button
           onClick={() => navigate(`${role && `/${role}/dashboard`}`)}
-          className="flex items-center gap-2 absolute top-[22%] z-10 cursor-pointer left-5 bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-medium pl-2 pr-3 py-2 rounded-full shadow-md hover:from-indigo-700 hover:to-blue-800 transition-all duration-300 ease-in-out whitespace-nowrap"
+          className="flex items-center gap-2 absolute top-4 sm:top-[25%] z-10 cursor-pointer left-4 bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-medium pl-2 pr-3 py-2 rounded-full shadow-md hover:from-indigo-700 hover:to-blue-800 transition-all duration-300 ease-in-out whitespace-nowrap "
         >
           <ArrowBigLeft className="w-5 h-4" />
           <span className="text-sm">Dashboard</span>
         </button>
       )}
 
-
       <div className="relative flex flex-col sm:flex-row items-center sm:items-center justify-evenly  px-4 sm:pl-12 py-3 w-full">
 
-        {/* Logo */}
-        <div>
+        {/* pre Logo */}
+        <div
+          className="relative">
+          {isAdmin && <div className="absolute bottom-10 -right-10">
+            <label
+              htmlFor="preLogo"
+              className="text-white flex items-center cursor-pointer bg-blue-800 hover:bg-blue-600  p-1 rounded-[5px] "
+            >
+              <Upload className="h-5 w-5 text-white " />
+            </label>
+            <input onChange={(e) => handleImageChange(e, "pre")} id="preLogo" type="file" className="hidden " />
+
+          </div>}
+
           <img
-            src="https://www.neeri.res.in/img/rsz_emblem_of_india.jpg"
-            alt="CSIR-AMPRI"
-            className="h-14 sm:h-20 mx-auto sm:mx-0"
+            src={navLogos?.preLogo?.imageLink && (navLogos.preLogo.imageLink.startsWith("uploads/") ? `${baseUrl}/${navLogos.preLogo.imageLink}` : navLogos.preLogo.imageLink)}
+            alt="logo1"
+            className="h-14 sm:h-24 sm:w-[6.6rem] mx-auto sm:mx-0"
           />
         </div>
 
@@ -158,9 +225,20 @@ const Navbar = ({ isAdmin }) => {
         </div>
 
         {/* Logo */}
-        <div>
+        <div className="relative">
+          {isAdmin && <div className="absolute bottom-10 -right-10">
+            <label
+              htmlFor="mainLogo"
+              className="text-white flex items-center cursor-pointer bg-blue-800 hover:bg-blue-600  p-1 rounded-[5px] "
+            >
+              <Upload className="h-5 w-5 text-white " />
+            </label>
+            <input id="mainLogo" onChange={(e) => handleImageChange(e, "main")} type="file" className="hidden " />
+
+          </div>}
+
           <img
-            src="http://localhost:4001/uploads/4dffb4b65a1efcf498f6efe020ec1f04e77eeb44c995c7cc671b6ad23cd844b0.jpg"
+            src={navLogos?.MainLogo?.imageLink && (navLogos.MainLogo.imageLink.startsWith("uploads/") ? `${baseUrl}/${navLogos.MainLogo.imageLink}` : navLogos.MainLogo.imageLink)}
             alt="CSIR-AMPRI"
             className="h-14 sm:h-24 sm:w-[6.6rem] mx-auto sm:mx-0"
           />

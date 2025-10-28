@@ -8,7 +8,8 @@ export const authAdmin = async (req, res, next) => {
   try {
     const token = req.cookies?.token; // JWT is in cookies
 
-    console.log("ufbgbhjbf ", req.params.userVisited);
+    console.log("userVisited ?  : ", req.params.userVisited);
+    console.log("req.cookies?.token ", req.cookies.token);
     if (req.params?.userVisited === "true") {
       await SiteDataModel.findOneAndUpdate(
         {},

@@ -14,6 +14,10 @@ import uploadrouter from "./routes/uploads.routes.js";
 import directorrouter from "./routes/director.routes.js";
 import newsrouter from "./routes/news.routes.js";
 import notificationrouter from "./routes/notification.routes.js";
+import importantLinkrouter from "./routes/homepage/ImportantLinks.routes.js";
+import navigationLinkrouter from "./routes/homepage/NavigationLinks.routes.js";
+import externalLinkrouter from "./routes/homepage/ExternalLinks.routes.js";
+
 import adminRouter from "./routes/Users.routes.js";
 import visionMandaterouter from "./routes/visionMandate.routes.js";
 
@@ -46,8 +50,10 @@ import siteDatarouter from "./routes/admin Dashboard/SiteData.routes.js";
 
 import galleryRouter from "./routes/Gallery.routes.js";
 
-//models
+import NavbarLogosRouter from "./routes/common/NavbarLogos.routes.js";
 
+
+//models
 dotenv.config();
 const app = express();
 
@@ -58,7 +64,6 @@ app.use(
     credentials: true, // allow cookies & Authorization headers
   })
 );
-
 
 app.use(express.json());
 app.use(cookieParser()); // ✅ to read cookies from requests
@@ -91,12 +96,16 @@ try {
   process.exit(1);
 }
 
-
 // Routes
 app.use("/upload", uploadrouter);
 app.use("/director", directorrouter);
 app.use("/news", newsrouter);
 app.use("/notification", notificationrouter);
+
+app.use("/importantLink", importantLinkrouter);
+app.use("/externalLink", externalLinkrouter);
+app.use("/navigationLink", navigationLinkrouter);
+
 app.use("/admin", adminRouter);
 app.use("/vision-mandate", visionMandaterouter);
 app.use("/organisation", organisationRouter);
@@ -113,7 +122,6 @@ app.use("/events", eventsRouter);
 app.use("/career", careerRouter);
 app.use("/officeMemorandum", officeMemorandumRouter);
 
-
 app.use("/table", tableRouter);
 
 // services
@@ -124,12 +132,13 @@ app.use("/contentRenderPages", contentRenderPagesRouter);
 
 app.use("/division-page", divisionPageRouter);
 
-app.use( "/siteData",siteDatarouter )
+app.use("/siteData", siteDatarouter);
 
-app.use("/galllery",galleryRouter)
+app.use("/galllery", galleryRouter);
+
+app.use("/navbar-logos", NavbarLogosRouter);
 
 const PORT = process.env.PORT || 4001;
-
 
 import { fileURLToPath } from "url";
 
@@ -144,6 +153,6 @@ if (process.env.NODE_ENV === "production") {
   app.get("*", (req, res) =>
     res.sendFile(path.join(frontendPath, "index.html"))
   );
-}
+} 
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -29,6 +29,15 @@ const adminSchema = new mongoose.Schema(
       enum: ["Super Admin", "Admin", "Editor", "Member"],
     },
 
+    twoFASecret: {
+      type: String,
+    },
+
+    is2FAEnabled : {
+      type: Boolean,
+      default :false
+    },
+
     access: {
       type: String,
       required: true,

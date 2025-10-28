@@ -1,6 +1,7 @@
 // @ts-nocheck
 import Admin from "../models/Users.model.js";
 
+
 // ==================== CREATE user ====================
 export const createUser = async (req, res) => {
   try {
@@ -13,7 +14,7 @@ export const createUser = async (req, res) => {
     if (!username || !email || !title || !role || !password)
       return res.status(400).json({ message: "All fields are required" });
 
-    if (role ==="Member" && (!accessModules || accessModules.length <1))
+    if (role === "Member" && (!accessModules || accessModules.length < 1))
       return res.status(400).json({ message: "Give access routes" });
 
     // Check if email already exists

@@ -7,22 +7,42 @@ const AmpriDirectorySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+
     designation: {
       type: String,
       required: true,
     },
+
     email: {
       type: String,
       required: true,
     },
+
     intercom: {
       type: String,
       default: "",
     },
+  
     office: {
       type: String,
       default: "",
     },
+
+    duties: {
+      type: String,
+      default: "",
+    },
+
+    payLevel: {
+      type: String,
+      default: "",
+    },
+
+    basicPay: {
+      type: String,
+      default: "",
+    },
+
     table: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "TablePage",

@@ -1,15 +1,17 @@
 // @ts-nocheck
 // src/pages/LoginPage.jsx
-import React, { useState , useRef} from "react";
+import React, { useState, useRef } from "react";
 import { api } from "../../api/axios"; // adjust path if needed
 import { useNavigate } from "react-router-dom";
 
 import { useUserData } from "../../context/UserDataContext";
 import StructureRoleRoute from "../../utils/StructureRoleRoute";
 
+import { VerifyTwoFA } from "../../api/axios";
+
 import ReCAPTCHA from "react-google-recaptcha";
 
-const SITE_KEY = import.meta.env.VITE_CAPTCHA_SITE_KEY; 
+const SITE_KEY = import.meta.env.VITE_CAPTCHA_SITE_KEY;
 
 const AdminLogin = ({ setIsAdmin }) => {
   const { updateUserData, UserData } = useUserData();
@@ -18,6 +20,9 @@ const AdminLogin = ({ setIsAdmin }) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const [is2FAEnabled, setIs2FAEnabled] = useState(UserData?.is2FAEnabled);
+  const [otp, setOtp] = useState("");
 
   const recaptchaRef = useRef(null);
 
@@ -40,9 +45,15 @@ const AdminLogin = ({ setIsAdmin }) => {
 
       if (res.data) {
         updateUserData(res.data.user);
+        console.log("Login response user data:", res.data.user);
         setIsAdmin(true);
-        const role = StructureRoleRoute(res.data.user);
-        navigate(`/${role}`);
+        if (res.data.user.is2FAEnabled) {
+          setIs2FAEnabled(true);
+        } else {
+          const role = StructureRoleRoute(res.data.user);
+          navigate(`/${role}`);
+        }
+
       }
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
@@ -52,9 +63,32 @@ const AdminLogin = ({ setIsAdmin }) => {
     }
   };
 
+  const handleVerify2FA = async () => {
+    try {
+      console.log("Verifying OTP:", otp);
+      const res = await VerifyTwoFA({
+        email: UserData.email,
+        token: otp
+      });
+      console.log("2FA response:", res);
+      if (res.data) {
+        updateUserData(res.data.user);
+        setOtp("");
+        const role = StructureRoleRoute(res.data.user);
+        navigate(`/${role}`);
+
+      } else {
+        alert(res.error.message)
+      }
+
+    } catch (err) {
+      alert("Couldn't verify, try again.");
+    }
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 relative">
         <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
           Login
         </h2>
@@ -106,6 +140,28 @@ const AdminLogin = ({ setIsAdmin }) => {
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
+
+        {
+          is2FAEnabled && <div className="bg-white w-full h-full absolute top-0 left-0 flex flex-col items-center justify-center p-8 rounded-2xl shadow-lg gap-4">
+            <p className="text-gray-700 font-semibold text-xl mb-3">
+              Enter 2FA Code from your app
+            </p>
+            <input
+              type="text"
+              placeholder="Enter 6-digit code"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              className="border rounded-lg px-3 py-2 w-48 focus:outline-none focus:ring focus:ring-blue-400"
+            />
+            <button
+              onClick={handleVerify2FA}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg w-fit"
+            >
+              Verify Code
+            </button>
+          </div>
+        }
+
       </div>
     </div>
   );

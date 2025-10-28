@@ -14,7 +14,7 @@ function DataTable({ from, title, columns, data, entriesPerPageOptions = [10, 25
     const [entriesPerPage, setEntriesPerPage] = useState(entriesPerPageOptions[0]);
     const [searchTerm, setSearchTerm] = useState("");
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
-    
+
     const [activeTab, setActiveTab] = useState(tabs ? tabs[0].key : null);
     const [isEditVisible, setIsEditVisible] = useState(false);
 
@@ -125,12 +125,12 @@ function DataTable({ from, title, columns, data, entriesPerPageOptions = [10, 25
             );
         }
 
-        if ((column.toLowerCase() === "details/download tender documents" || column.toLowerCase() === "more details" || (from === "Career" &&(column.toLowerCase() === "project staff" || column.toLowerCase() === "detail & application" || column.toLowerCase() === "notifications" || column.toLowerCase() === "shortlisted candidates for interview" || column.toLowerCase() === "result")) || (from === "OfficeMemorandum" && column.toLowerCase() === "download/details") ) && value) {
+        if ((column.toLowerCase() === "details/download tender documents" || ((from === "AnnualProcurement" || from === "TechnologyInfo" )&& column.toLowerCase() === "detail/download" ) || (from === "APR_2023"&& column.toLowerCase() === "property return detail" ) || column.toLowerCase() === "more details" || (from === "Career" && (column.toLowerCase() === "project staff" || column.toLowerCase() === "detail & application" || column.toLowerCase() === "notifications" || column.toLowerCase() === "shortlisted candidates for interview" || column.toLowerCase() === "result")) || (from === "OfficeMemorandum" && column.toLowerCase() === "download/details")) && value) {
             const documents = Array.isArray(value) ? value : [value];
             return (
                 <div className="flex gap-x-4 gap-y-2 flex-wrap">
-                    {documents.map((document) => (
-                        <a key={document._id} href={document.url.startsWith("uploads/")
+                    {documents.map((document , i) => (
+                        <a key={document?._id ||i } href={document.url && document.url.startsWith("uploads/")
                             ? `${baseUrl}/${document.url}`
                             : document.url} className="text-blue-400 hover:text-blue-600 hover:text-[15px] transition-all  underline underline-offset-2 px-1 hover:px-0">
                             {typeof document.name === "string"
@@ -177,18 +177,29 @@ function DataTable({ from, title, columns, data, entriesPerPageOptions = [10, 25
                 {isAdmin && (
                     <button
                         onClick={toggleEditVisibility}
-                        className="absolute top-6 right-[2%] border border-white bg-blue-800 py-0.5 px-1 rounded-md cursor-pointer text-white font-semibold text-xl hover:bg-blue-600"
+                        className="absolute top-6 right-[1%] border border-white bg-blue-800 py-0.5 px-1 rounded-md cursor-pointer text-white font-semibold text-xl hover:bg-blue-600"
                     >
-                        Edit {title}
+                        Edit
                     </button>
                 )}
+
+                {
+                    from === "BudgetAllocations" &&
+                    <div className="text-sm text-center">
+                        <p className="font-medium">The budget allocated to each of its agency, indicating the particulars of all plans, proposed expenditures and reports on disbursement made</p>
+                        <span className="text-gray-700 font-semibold">note : </span>
+                        <span className="text-blue-800 font-medium">Budget Allocation for this Year </span> <span className="text-gray-800">and</span>
+                        <span className="text-blue-800 font-medium"> Amount rupees in lakh</span>
+                    </div>
+                }
+
             </div>
 
             {/* Tabs Section (if tabs are provided) */}
             {tabs && (
                 <div className="border-b border-gray-200">
                     <div className="flex overflow-x-auto">
-                        
+
                         {tabs.map((tab) => (
                             <button
                                 key={tab.key}
@@ -256,7 +267,7 @@ function DataTable({ from, title, columns, data, entriesPerPageOptions = [10, 25
                                     className="px-6 py-3 text-left text-[14px] font-bold text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                                     onClick={() => requestSort(column)}
                                 >
-                                    <div className="flex items-center">
+                                    <div className="flex items-center whitespace-nowrap max-w-[18vw] overflow-x-auto ultra-thin-scrollbar mx-auto ">
                                         {column}
                                         {sortConfig.key === column && (
                                             <span className="ml-1">
@@ -284,8 +295,10 @@ function DataTable({ from, title, columns, data, entriesPerPageOptions = [10, 25
                                                 : 'max-w-xs'
                                                 }`}
                                         >
-                                            {console.log("Row Data :", row,"column : ",column,"row[column] :",row[column])}
-                                            {renderCellContent(column, row[column])}
+                                            {console.log("Row Data :", row, "column : ", column, "row[column] :", row[column])}
+                                            <div className="max-w-[18vw] mx-auto whitespace-break-spaces ">
+                                                {renderCellContent(column, row[column])}
+                                            </div>
                                         </td>
                                     ))}
                                 </tr>
@@ -293,7 +306,7 @@ function DataTable({ from, title, columns, data, entriesPerPageOptions = [10, 25
                         ) : (
                             <tr>
                                 <td colSpan={columns.length} className="px-6 py-8 text-center">
-                                    <div className="flex flex-col items-center justify-center text-gray-500">
+                                    <div className="flex flex-col items-center justify-center text-gray-500 ">
                                         <svg className="h-12 w-12 text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>

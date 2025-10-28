@@ -13,7 +13,7 @@ export const api = axios.create({
 const handleRequest = async (requestFn) => {
   try {
     const response = await requestFn();
-    console.log("rrrrrrrrrrrrrrrrrrrr : ", response);
+    console.log("rrrrrrrrrrrrrrrrrr : ", response);
     return { data: response.data, error: null };
   } catch (error) {
     console.error("API Error:", error);
@@ -30,17 +30,28 @@ const handleRequest = async (requestFn) => {
 export const fileUpload = (payload) =>
   handleRequest(() => api.post(`/contentRenderPages/upload`, payload));
 
+// Navbar Logos
+export const fetchNavLogos = (payload) =>
+  handleRequest(() => api.get(`/navbar-logos`, payload));
+export const UpdateNavLogos = (id, payload) =>
+  handleRequest(() => api.put(`/navbar-logos/${id}`, payload));
 
 /* -------------------  USER's API ------------------- */
 export const fetchUsers = (payload) =>
   handleRequest(() => api.get(`/admin`, payload));
 export const CreateUser = (payload) =>
   handleRequest(() => api.post(`/admin`, payload));
-export const UpdateUser = (id,payload) =>
+export const UpdateUser = (id, payload) =>
   handleRequest(() => api.put(`/admin/${id}`, payload));
-export const DeleteUser = (id ,payload) =>
+export const DeleteUser = (id, payload) =>
   handleRequest(() => api.delete(`/admin/${id}`, payload));
 
+export const SetUpTwoFA = (payload) =>
+  handleRequest(() => api.post(`/admin/setup-2fa`, payload));
+export const VerifyTwoFA = (payload) =>
+  handleRequest(() => api.post(`/admin/verify-2fa`, payload));
+export const DisableTwoFA = (payload) =>
+  handleRequest(() => api.post(`/admin/disable-2fa`, payload));
 
 // homePage
 export const fetchUploads = () =>
@@ -62,15 +73,15 @@ export const deleteUpload = (id) =>
 
 // director
 export const fetchDirector = () => handleRequest(() => api.get("/director"));
-export const updateDirector = (id, formData) =>{
-  console.log("formdata director ............." ,formData)
+export const updateDirector = (id, formData) => {
+  console.log("formdata director .............", formData);
 
   handleRequest(() =>
     api.put(`/director/${id}`, formData, {
       headers: { "Content-Type": "multipart/form-data" },
     })
   );
-}
+};
 
 // news
 export const fetchNews = () => handleRequest(() => api.get("/news"));
@@ -90,6 +101,36 @@ export const updateNotification = (id, payload) =>
   handleRequest(() => api.put(`/notification/${id}`, payload));
 export const deleteNotification = (id) =>
   handleRequest(() => api.delete(`/notification/${id}`));
+
+// importantLink
+export const fetchImportantLink = () =>
+  handleRequest(() => api.get("/importantLink"));
+export const createImportantLink = (payload) =>
+  handleRequest(() => api.post("/importantLink", payload));
+export const updateImportantLink = (id, payload) =>
+  handleRequest(() => api.put(`/importantLink/${id}`, payload));
+export const deleteImportantLink = (id) =>
+  handleRequest(() => api.delete(`/importantLink/${id}`));
+
+// navigationLink
+export const fetchNavigationLink = () =>
+  handleRequest(() => api.get("/navigationLink"));
+export const createNavigationLink = (payload) =>
+  handleRequest(() => api.post("/navigationLink", payload));
+export const updateNavigationLink = (id, payload) =>
+  handleRequest(() => api.put(`/navigationLink/${id}`, payload));
+export const deleteNavigationLink = (id) =>
+  handleRequest(() => api.delete(`/navigationLink/${id}`));
+
+// externalLink
+export const fetchExternalLink = () =>
+  handleRequest(() => api.get("/externalLink"));
+export const createExternalLink = (payload) =>
+  handleRequest(() => api.post("/externalLink", payload));
+export const updateExternalLink = (id, payload) =>
+  handleRequest(() => api.put(`/externalLink/${id}`, payload));
+export const deleteExternalLink = (id) =>
+  handleRequest(() => api.delete(`/externalLink/${id}`));
 
 // vision/mandate
 export const fetchVisionMandate = () =>
@@ -354,7 +395,7 @@ export const updateEvent = (id, payload) =>
 export const deleteEvent = (id) =>
   handleRequest(() => api.delete(`events/delete/${id}`));
 
-/* -------------  Career --------------- */
+/*  -------------  Career ---------------  */
 export const fetchCareer = () => handleRequest(() => api.get("/career"));
 
 export const createCareer = (payload) =>

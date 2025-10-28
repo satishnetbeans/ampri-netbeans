@@ -6,7 +6,7 @@ import Card from "../../../components/Admin Dashboard/Card";
 
 import { fetchUsers, CreateUser, UpdateUser, DeleteUser } from "../../../api/axios";
 
-const Users = () => {
+const Users = ({UserData , updateUserData , SiteData}) => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
 

@@ -6,16 +6,3 @@ export default function StructureRoleRoute(userData) {
   return role;
 }
 
-// import { useUserData } from "../../context/UserDataContext";
-// import StructureRoleRoute from "../../utils/StructureRoleRoute";
-
-// const { UserData } = useUserData();
-
-// const [role, setrole] = useState(null);
-
-// useEffect(() => {
-//   if (UserData) {
-//     const rl = StructureRoleRoute(UserData);
-//     rl && setrole(rl);
-//   }
-// }, [UserData]);

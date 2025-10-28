@@ -39,7 +39,7 @@ const PrintMediaCarousel = ({ printMedia }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {current.fileType === "image" ?
+      {current?.fileType === "image" ?
         <div><img
           key={current.fileUrl}
           src={current.fileUrl}
@@ -80,7 +80,7 @@ const PrintMediaCarousel = ({ printMedia }) => {
       {enlarged && (
         <div className="fixed inset-0 bg-black bg-opacity-80 z-50 flex justify-center pt-8">
           {console.log(current.fileUrl)}
-          {current.fileType === "image" ?
+          {current?.fileType === "image" ?
             <img
               src={current.fileUrl}
               alt={current.title}

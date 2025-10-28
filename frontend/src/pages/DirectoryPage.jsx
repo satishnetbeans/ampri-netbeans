@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React ,{useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/ui/Navbar";
 import Topbar from "../components/ui/Topbar";
 import Footer from "../components/ui/Footer";
@@ -27,7 +27,10 @@ function DirectoryPage({ isAdmin }) {
             INTERCOM: item.intercom,
             OFFICE: item.office
           }));
-        const Columns = res.data[0].table.columns;
+
+        const Columns = res.data[0].table.columns.filter(col => {
+          return (col !== "duties" && col !== "payLevel" && col !== "basicPay");
+        });
         console.log("AmpriDirectory data : ", Data, Columns);
         setcouncilData(Data);
         setcouncilColumns(Columns);
