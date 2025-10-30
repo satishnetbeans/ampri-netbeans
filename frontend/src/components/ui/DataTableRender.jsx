@@ -8,7 +8,7 @@ import checkBaseURL from "../../utils/CheckBaseUrl";
 function DataTable({ from, title, columns, data, entriesPerPageOptions = [10, 25, 50], tabs = null, isAdmin, table }) {
     const baseUrl = checkBaseURL()
 
-    console.log("DataTable Render from :", from, title, columns, data, entriesPerPageOptions, tabs, isAdmin, table)
+    console.log("DataTable Render from  :", from, title, columns, data, entriesPerPageOptions, tabs, isAdmin, table)
 
     const [currentPage, setCurrentPage] = useState(1);
     const [entriesPerPage, setEntriesPerPage] = useState(entriesPerPageOptions[0]);
@@ -17,6 +17,8 @@ function DataTable({ from, title, columns, data, entriesPerPageOptions = [10, 25
 
     const [activeTab, setActiveTab] = useState(tabs ? tabs[0].key : null);
     const [isEditVisible, setIsEditVisible] = useState(false);
+
+    console.log("aaaaaaaaaaaaaaaaa ",activeTab)
 
     // Determine which data to use based on tabs
     const dataSource = useMemo(() => {
@@ -125,12 +127,12 @@ function DataTable({ from, title, columns, data, entriesPerPageOptions = [10, 25
             );
         }
 
-        if ((column.toLowerCase() === "details/download tender documents" || ((from === "AnnualProcurement" || from === "TechnologyInfo" )&& column.toLowerCase() === "detail/download" ) || (from === "APR_2023"&& column.toLowerCase() === "property return detail" ) || column.toLowerCase() === "more details" || (from === "Career" && (column.toLowerCase() === "project staff" || column.toLowerCase() === "detail & application" || column.toLowerCase() === "notifications" || column.toLowerCase() === "shortlisted candidates for interview" || column.toLowerCase() === "result")) || (from === "OfficeMemorandum" && column.toLowerCase() === "download/details")) && value) {
+        if ((column.toLowerCase() === "details/download tender documents" || ((from === "AnnualProcurement" || from === "TechnologyInfo") && column.toLowerCase() === "detail/download") || (from === "APR_2023" && column.toLowerCase() === "property return detail") || (from === "SAIF" && column.toLowerCase() === "document") || column.toLowerCase() === "more details" || (from === "Career" && (column.toLowerCase() === "project staff" || column.toLowerCase() === "detail & application" || column.toLowerCase() === "notifications" || column.toLowerCase() === "shortlisted candidates for interview" || column.toLowerCase() === "result")) || (from === "OfficeMemorandum" && column.toLowerCase() === "download/details")) && value) {
             const documents = Array.isArray(value) ? value : [value];
             return (
                 <div className="flex gap-x-4 gap-y-2 flex-wrap">
-                    {documents.map((document , i) => (
-                        <a key={document?._id ||i } href={document.url && document.url.startsWith("uploads/")
+                    {documents.map((document, i) => (
+                        <a target="_blank" key={document?._id || i} href={document.url && document.url.startsWith("uploads/")
                             ? `${baseUrl}/${document.url}`
                             : document.url} className="text-blue-400 hover:text-blue-600 hover:text-[15px] transition-all  underline underline-offset-2 px-1 hover:px-0">
                             {typeof document.name === "string"
@@ -262,9 +264,12 @@ function DataTable({ from, title, columns, data, entriesPerPageOptions = [10, 25
                     <thead className="bg-gray-50">
                         <tr>
                             {columns.map((column, index) => (
+
                                 <th
                                     key={index}
-                                    className="px-6 py-3 text-left text-[14px] font-bold text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                                    className={`px-6 py-3 text-left text-[14px] font-bold text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-gray-100 ${(column === "order" && columns.includes("S.NO.")) && "hidden"} 
+                                    ${from === "SAIF" && (activeTab === "Processing Facilities" && (column === "remarks" || column ===  "Charges for academics institution(in Rs.)" || column === "Charges for industry(in Rs.)" || column === "document") && "hidden")}
+                                    `}
                                     onClick={() => requestSort(column)}
                                 >
                                     <div className="flex items-center whitespace-nowrap max-w-[18vw] overflow-x-auto ultra-thin-scrollbar mx-auto ">
@@ -293,7 +298,7 @@ function DataTable({ from, title, columns, data, entriesPerPageOptions = [10, 25
                                             className={`px-6 py-4 text-sm font-[500] text-gray-500 ${column.toLowerCase() === 'img'
                                                 ? 'w-20'
                                                 : 'max-w-xs'
-                                                }`}
+                                                }  ${(column === "order" && columns.includes("S.NO.")) && "hidden"}  ${from === "SAIF" && (activeTab === "Processing Facilities" && (column === "remarks" || column ===  "Charges for academics institution(in Rs.)" || column === "Charges for industry(in Rs.)" || column === "document") && "hidden")} `}
                                         >
                                             {console.log("Row Data :", row, "column : ", column, "row[column] :", row[column])}
                                             <div className="max-w-[18vw] mx-auto whitespace-break-spaces ">

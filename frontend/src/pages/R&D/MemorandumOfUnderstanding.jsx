@@ -80,7 +80,7 @@ function MouPage({ isAdmin }) {
                 isAdmin={isAdmin}
             />}
 
-           
+
 
             <Footer />
             <div id="google_translate_element" className="invisible"></div>

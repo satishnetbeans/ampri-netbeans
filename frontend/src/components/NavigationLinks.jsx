@@ -66,11 +66,10 @@ const NavigationLinks = ({ isAdmin, userRole }) => {
                 {section.title}
               </h4>
 
-
               <ul className="space-y-1 text-red-400 ">
                 {section.links.map((link, i) => (
                   <li key={i} className="hover:underline cursor-pointer">
-                    <a target="_blank" href={`${link.url.startsWith("https:")?link.url : userRole?`/${userRole}${link.url}` : link.url }`} className="whitespace-nowrap">{link.name}</a>
+                    <a target="_blank" href={`${(link.url.startsWith("https:") || link.url.startsWith("http:")) ? link.url : userRole ? `/${userRole}${link.url}` : link.url}`} className="whitespace-nowrap">{link.name}</a>
 
                   </li>
                 ))}

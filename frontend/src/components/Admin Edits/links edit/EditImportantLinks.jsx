@@ -6,7 +6,9 @@ import {
   createImportantLink,
 } from "../../../api/axios";
 
-export default function EditImportantLinks({ AllLinks ,setisTogggleOpen }) {
+import UploadFile from "../../ui/UploadFile";
+
+export default function EditImportantLinks({ AllLinks, setisTogggleOpen }) {
   const [editing, setEditing] = useState(null);
   const [form, setForm] = useState({ name: "", url: "" });
   const [items, setItems] = useState(AllLinks || []);
@@ -51,52 +53,57 @@ export default function EditImportantLinks({ AllLinks ,setisTogggleOpen }) {
   return (
     <div className="p-6 fixed top-0 left-0 w-[100vw] h-[100vh] bg-white bg-opacity-50 z-50 overflow-auto">
       <h2 className="text-xl mb-4">Important Links</h2>
-      <div onClick={()=> setisTogggleOpen(false)} className="bg-blue-700 hover:bg-blue-500 text-lg font-semibold text-white absolute right-4 top-4 rounded-lg py-1 px-2 cursor-pointer ">cancel</div>
+      <div onClick={() => setisTogggleOpen(false)} className="bg-blue-700 hover:bg-blue-500 text-lg font-semibold text-white absolute right-4 top-4 rounded-lg py-1 px-2 cursor-pointer ">cancel</div>
 
-      {/* Form */}
-      <form
-        onSubmit={submit}
-        className="mb-6 max-w-xl bg-white p-4 rounded shadow"
-      >
-        <h3 className="mb-2 font-semibold">
-          {editing ? "Edit Link" : "Create Link"}
-        </h3>
+      <div className="flex justify-between items-start gap-5 ">
+        {/* Form */}
+        <form
+          onSubmit={submit}
+          className="mb-6 max-w-xl bg-white p-4 rounded shadow w-[45%]"
+        >
+          <h3 className="mb-2 font-semibold">
+            {editing ? "Edit Link" : "Create Link"}
+          </h3>
 
-        <label className="block mb-1">Name</label>
-        <input
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-          className="w-full border p-2 rounded mb-2"
-        />
+          <label className="block mb-1">Name</label>
+          <input
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            className="w-full border p-2 rounded mb-2"
+          />
 
-        <label className="block mb-1">URL</label>
-        <input
-          value={form.url}
-          onChange={(e) => setForm({ ...form, url: e.target.value })}
-          className="w-full border p-2 rounded mb-2"
-        />
+          <label className="block mb-1">URL</label>
+          <input
+            value={form.url}
+            onChange={(e) => setForm({ ...form, url: e.target.value })}
+            className="w-full border p-2 rounded mb-2"
+          />
 
-        <div className="flex gap-2">
-          <button
-            type="submit"
-            className="px-3 py-1 bg-blue-600 text-white rounded"
-          >
-            {editing ? "Update" : "Create"}
-          </button>
-          {editing && (
+          <div className="flex gap-2">
             <button
-              type="button"
-              onClick={() => {
-                setEditing(null);
-                setForm({ name: "", url: "" });
-              }}
-              className="px-3 py-1 border rounded"
+              type="submit"
+              className="px-3 py-1 bg-blue-600 text-white rounded"
             >
-              Cancel
+              {editing ? "Update" : "Create"}
             </button>
-          )}
-        </div>
-      </form>
+            {editing && (
+              <button
+                type="button"
+                onClick={() => {
+                  setEditing(null);
+                  setForm({ name: "", url: "" });
+                }}
+                className="px-3 py-1 border rounded"
+              >
+                Cancel
+              </button>
+            )}
+          </div>
+        </form>
+
+        <UploadFile />
+
+      </div>
 
       {/* Links list */}
       <div className="space-y-3">

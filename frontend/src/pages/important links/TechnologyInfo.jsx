@@ -139,8 +139,6 @@ function TechnologyInfo({ isAdmin }) {
                 title="Decision making process (including channels of supervision and accountability)"
                 from="TechnologyInfo"
               
-                
-
                 isAdmin={false}
             />}
 

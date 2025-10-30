@@ -8,6 +8,9 @@ export function processTableData(resData, fieldMapping) {
 
   const table = resData[0].table;
   const columns = table.columns;
+  columns.unshift("S.NO.")
+  // columns = columns.filter(item => item !== "order");
+  console.log("cooolllllll   ... : " , columns)
 
   // Check if tabs exist
   if (table.tabs && Array.isArray(table.tabs) && table.tabs.length > 0) {
@@ -23,15 +26,15 @@ export function processTableData(resData, fieldMapping) {
     const updatetabs = intermediateTabs.map((tab) => ({
       key: tab.key,
       label: tab.label,
-      data: tab.data
-        .map((item) => {
-          const mappedItem = { _id: item._id, order: item.order };
+      data: tab.data.sort((a, b) => a.order - b.order)
+        .map((item , i) => {
+          const mappedItem = { _id: item._id, order: item.order , "S.NO." : i+1 };
           for (const [displayKey, itemKey] of Object.entries(fieldMapping)) {
             mappedItem[displayKey] = item[itemKey];
           }
           return mappedItem;
         })
-        .sort((a, b) => a.order - b.order),
+        ,
     }));
 
     return { columns, processedData: updatetabs, table };

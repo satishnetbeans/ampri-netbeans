@@ -14,11 +14,11 @@ function ContentRenderer({ from, contentData, isAdmin }) {
     const [activeTab, setActiveTab] = useState(0);
     const [isEditVisible, setIsEditVisible] = useState(false);
     const [contentRenderData, setcontentRenderData] = useState(null);
-    // console.log("contentRenderData above  : ", contentRenderData)
+    console.log("contentData above ...  : ", contentData)
 
 
     useEffect(() => {
-        if (contentData && contentData.pageContent && contentData.pageContent.tabs.length > 0) {
+        if (contentData.title) {
             console.log("contentData in useEffect :  ", contentData)
             const updated = contentData
             updated.pageContent.tabs.forEach(tab => {
@@ -26,7 +26,7 @@ function ContentRenderer({ from, contentData, isAdmin }) {
             });
             setcontentRenderData(updated)
         }
-        else if (contentData && contentData.pageContent && contentData.pageContent.content.length > 0) {
+        else if ((contentData && contentData.pageContent && contentData.pageContent.content.length > 0)|| (contentData && contentData.pageContent && contentData.pageContent.tabs.length > 0)) {
             const updated = contentData
             updated.pageContent.content.sort((a, b) => a.order - b.order)
             setcontentRenderData(updated)

@@ -6,6 +6,8 @@ import {
   createNavigationLink, // used for creating a section
 } from "../../../api/axios";
 
+import UploadFile from "../../ui/UploadFile";
+
 
 export default function EditNavigationLinks({ AllLinks, setisTogggleOpen }) {
   const [sections, setSections] = useState(AllLinks || []);
@@ -96,87 +98,94 @@ export default function EditNavigationLinks({ AllLinks, setisTogggleOpen }) {
         Cancel
       </div>
 
-      {/* Form */}
-      <form
-        onSubmit={submit}
-        className="mb-6 max-w-2xl bg-white p-4 rounded shadow"
-      >
-        <h3 className="mb-2 font-semibold">
-          {editingSection ? "Edit Section" : "Create New Section"}
-        </h3>
 
-        {/* Title Input */}
-        <label className="block mb-1 font-medium">Section Title</label>
-        <input
-          value={form.title}
-          onChange={(e) => setForm({ ...form, title: e.target.value })}
-          placeholder="e.g., Intranet, Publications"
-          className="w-full border p-2 rounded mb-4"
-          required
-        />
 
-        {/* Dynamic Links */}
-        <div>
-          <h4 className="font-semibold mb-2">Links</h4>
-          {form.links.map((link, index) => (
-            <div key={index} className="flex gap-2 mb-2">
-              <input
-                value={link.name}
-                onChange={(e) =>
-                  handleLinkChange(index, "name", e.target.value)
-                }
-                placeholder="Link Name"
-                className="border p-2 rounded flex-1"
-                required
-              />
-              <input
-                value={link.url}
-                onChange={(e) =>
-                  handleLinkChange(index, "url", e.target.value)
-                }
-                placeholder="https://example.com"
-                className="border p-2 rounded flex-1"
-                required
-              />
-              {form.links.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() => handleRemoveLinkField(index)}
-                  className="bg-red-500 text-white px-2 rounded"
-                >
-                  ✕
-                </button>
-              )}
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={handleAddLinkField}
-            className="text-blue-600 text-sm underline mb-4"
-          >
-            + Add Another Link
-          </button>
-        </div>
+      <div className="flex justify-between items-start gap-5 ">
+        {/* Form */}
+        <form
+          onSubmit={submit}
+          className="mb-6  bg-white p-4 rounded shadow w-[45%]"
+        >
+          <h3 className="mb-2 font-semibold">
+            {editingSection ? "Edit Section" : "Create New Section"}
+          </h3>
 
-        {/* Submit Buttons */}
-        <div className="flex gap-2 mt-4">
-          <button
-            type="submit"
-            className="px-3 py-1 bg-blue-600 text-white rounded"
-          >
-            {editingSection ? "Update Section" : "Create Section"}
-          </button>
-          {editingSection && (
+          {/* Title Input */}
+          <label className="block mb-1 font-medium">Section Title</label>
+          <input
+            value={form.title}
+            onChange={(e) => setForm({ ...form, title: e.target.value })}
+            placeholder="e.g., Intranet, Publications"
+            className="w-full border p-2 rounded mb-4"
+            required
+          />
+
+          {/* Dynamic Links */}
+          <div>
+            <h4 className="font-semibold mb-2">Links</h4>
+            {form.links.map((link, index) => (
+              <div key={index} className="flex gap-2 mb-2">
+                <input
+                  value={link.name}
+                  onChange={(e) =>
+                    handleLinkChange(index, "name", e.target.value)
+                  }
+                  placeholder="Link Name"
+                  className="border p-2 rounded flex-1"
+                  required
+                />
+                <input
+                  value={link.url}
+                  onChange={(e) =>
+                    handleLinkChange(index, "url", e.target.value)
+                  }
+                  placeholder="https://example.com"
+                  className="border p-2 rounded flex-1"
+                  required
+                />
+                {form.links.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveLinkField(index)}
+                    className="bg-red-500 text-white px-2 rounded"
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+            ))}
             <button
               type="button"
-              onClick={resetForm}
-              className="px-3 py-1 border rounded"
+              onClick={handleAddLinkField}
+              className="text-blue-600 text-sm underline mb-4"
             >
-              Cancel
+              + Add Another Link
             </button>
-          )}
-        </div>
-      </form>
+          </div>
+
+          {/* Submit Buttons */}
+          <div className="flex gap-2 mt-4">
+            <button
+              type="submit"
+              className="px-3 py-1 bg-blue-600 text-white rounded"
+            >
+              {editingSection ? "Update Section" : "Create Section"}
+            </button>
+            {editingSection && (
+              <button
+                type="button"
+                onClick={resetForm}
+                className="px-3 py-1 border rounded"
+              >
+                Cancel
+              </button>
+            )}
+          </div>
+        </form>
+            
+        <UploadFile />
+
+      </div>
 
       {/* Existing Sections */}
       <div className="space-y-6">

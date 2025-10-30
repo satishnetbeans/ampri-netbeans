@@ -8,6 +8,8 @@ import ContentRenderer from "../components/ui/ContentRenderer"
 
 
 
+
+
 function CSR({ isAdmin }) {
   const [CSR, setCSR] = useState(null)
       useEffect(() => {
@@ -36,6 +38,7 @@ function CSR({ isAdmin }) {
 
       {/* Reusable ContentRenderer */}
       {CSR && <ContentRenderer contentData={CSR} isAdmin={isAdmin} />}
+
 
       <Footer />
       <div id="google_translate_element" className="invisible"></div>

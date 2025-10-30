@@ -44,7 +44,8 @@ const ImportantLinks = ({ isAdmin, userRole }) => {
           {links.map((link, i) => (
             <a
               key={i}
-              href={`${link.url.startsWith("https:") ? link.url : userRole ? `/${userRole}${link.url}` : link.url}`}
+              target="_blank"
+              href={`${(link.url.startsWith("https:") || link.url.startsWith("http:")) ? link.url : userRole ? `/${userRole}${link.url}` : link.url}`}
               className="bg-[#004080] hover:bg-[#004c98] text-white px-6 py-1 rounded-lg shadow-md flex items-center justify-center w-[70%] max-[600px]:w-full"
             >
               <div className="overflow-x-auto  whitespace-nowrap max-w-full scrollbar-hide">

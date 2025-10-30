@@ -57,6 +57,8 @@ import NavbarLogosRouter from "./routes/common/NavbarLogos.routes.js";
 dotenv.config();
 const app = express();
 
+
+console.log("process.env.CORS_ORIGIN......  : ",process.env.CORS_ORIGIN)
 // ✅ Proper CORS setup
 app.use(
   cors({
@@ -67,6 +69,7 @@ app.use(
 
 app.use(express.json());
 app.use(cookieParser()); // ✅ to read cookies from requests
+
 
 app.use("/uploads", (req, res, next) => {
   const filePath = path.join(process.cwd(), "uploads", req.path);
@@ -156,3 +159,4 @@ if (process.env.NODE_ENV === "production") {
 } 
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+ 

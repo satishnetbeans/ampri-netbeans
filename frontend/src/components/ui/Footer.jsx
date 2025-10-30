@@ -49,24 +49,24 @@ export default function Footer({ isAdmin }) {
           <ul className="space-y-1 text-black text-[14px]">
             <li className="cursor-pointer hover:underline"
             >
-               <a href={`${role ? `/${role}/Website-Policy` : `/Website-Policy`}`}>Website Policy</a>
-              
+              <a href={`${role ? `/${role}/Website-Policy` : `/Website-Policy`}`}>Website Policy</a>
+
             </li>
             <li className="cursor-pointer hover:underline">
-               <a href={`${role ? `/${role}/Disclaimer` : `/Disclaimer`}`}>Disclaimer</a>
-              
+              <a href={`${role ? `/${role}/Disclaimer` : `/Disclaimer`}`}>Disclaimer</a>
+
             </li>
             <li className="cursor-pointer hover:underline">
-               <a href={`${role ? `/${role}/Web-Policy-Manager` : `/Web-Policy-Manager`}`}>Web Policy Manager</a>
-              
+              <a href={`${role ? `/${role}/Web-Policy-Manager` : `/Web-Policy-Manager`}`}>Web Policy Manager</a>
+
             </li>
             <li className="cursor-pointer hover:underline">
-               <a href={`${role ? `/${role}/Annual-Property-Return` : `/Annual-Property-Return`}`}>Annual Property Return</a>
-              
+              <a href={`${role ? `/${role}/Annual-Property-Return` : `/Annual-Property-Return`}`}>Annual Property Return</a>
+
             </li>
             <li className="cursor-pointer hover:underline">
-               <a href={`${role ? `/${role}/Sitemap` : `/Sitemap`}`}>Sitemap</a>
-              
+              <a href={`${role ? `/${role}/Sitemap` : `/Sitemap`}`}>Sitemap</a>
+
             </li>
           </ul>
         </div>

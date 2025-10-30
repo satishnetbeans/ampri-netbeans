@@ -235,7 +235,7 @@ function DailyNewsPapers({ isAdmin }) {
                     id={galleryData._id}
                     title={galleryData.title}
                     sections={galleryData.sections}
-                    isAdmin={isAdmin}
+                    isAdmin={false}
                 />}
 
             </div>

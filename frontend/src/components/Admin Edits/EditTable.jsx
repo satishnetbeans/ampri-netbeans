@@ -22,12 +22,16 @@ import { createOfficeMemorandum, updateOfficeMemorandum, deleteOfficeMemorandum 
 const AdminEditTable = ({ data, columns, title, tabs, activeTab, onCancel, from, table, tab }) => {
     const [CareerColumnForDocument, setCareerColumnForDocument] = useState(null);
 
-    if (columns && !columns.includes("order")) {
-        columns.unshift("order")
-
-    }
     console.log("  ......................... edit Table ..................................   ")
     console.log("table in data : ", data, columns, from)
+
+    if (columns && !columns.includes("order")) {
+        columns.unshift("order")
+    }
+    if (columns && columns.includes("S.NO.")) {
+        columns = columns.filter(item => item !== "S.NO.");
+    }
+
 
     const [tableData, setTableData] = useState([]);
     const [originalData, setOriginalData] = useState([]);
@@ -414,7 +418,7 @@ const AdminEditTable = ({ data, columns, title, tabs, activeTab, onCancel, from,
                         if (formData) {
                             window.location.reload();
                         }
-                        if(from === "Career" ){
+                        if (from === "Career") {
                             window.location.reload();
                         }
 
@@ -472,7 +476,21 @@ const AdminEditTable = ({ data, columns, title, tabs, activeTab, onCancel, from,
                     Add New Row
                 </button>
 
-                {from === "Career" && <span className='absolute text-[12px]  left-0 bottom-0 text-red-500'><span className='text-gray-900 font-bold'>note : </span>columns which contains documents,  update or create one by one.</span>}  
+
+                <div className='absolute text-[12px]  left-0 bottom-0 w-[28vw] '>
+                    <span className='font-bold text-[14px]'>note :</span>
+
+                    <ul className=' text-red-500  text-nowrap  list-disc pl-4 w-full overflow-x-auto pb-2.5 '>
+
+                        <li><span >Lower The order, higher the row.</span></li>
+
+                        {from === "Career" && <li><span >columns which contains documents,  update or create one by one.</span></li>}
+
+                    </ul>
+                </div>
+
+
+
             </div>
 
             <div className="overflow-x-auto w-full rounded-lg shadow">
