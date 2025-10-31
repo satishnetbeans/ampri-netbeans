@@ -177,7 +177,7 @@ const Navbar = ({ isAdmin }) => {
   return (
     <nav className="w-full bg-[#fff] shadow-md relative">
 
-      {isAdmin && (
+      {role && (
         <button
           onClick={() => navigate(`${role && `/${role}/dashboard`}`)}
           className="flex items-center gap-2 absolute top-4 sm:top-[25%] z-10 cursor-pointer left-4 bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-medium pl-2 pr-3 py-2 rounded-full shadow-md hover:from-indigo-700 hover:to-blue-800 transition-all duration-300 ease-in-out whitespace-nowrap "

@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon main.js",
     "start": "node main.js",
-    "serve": "NODE_ENV=production node main.js",
+    "start:prod": "NODE_ENV=production node main.js",
     "build-client": "cd ../frontend && npm run build"
   },
   "keywords": [],

@@ -6,7 +6,7 @@ import Card from "../../../components/Admin Dashboard/Card";
 
 import { fetchUsers, CreateUser, UpdateUser, DeleteUser } from "../../../api/axios";
 
-const Users = ({UserData , updateUserData , SiteData}) => {
+const Users = ({ UserData, updateUserData, SiteData }) => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -258,12 +258,13 @@ const Users = ({UserData , updateUserData , SiteData}) => {
                 <h2 className="text-2xl font-semibold text-gray-800">
                     Manage Users
                 </h2>
-                <button
+                {UserData.role === "Super Admin" && <button
                     onClick={() => handleOpenModal()}
                     className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition"
                 >
                     <UserPlus /> Add User
-                </button>
+                </button>}
+
             </div>
 
             {/* User Table */}
@@ -313,18 +314,25 @@ const Users = ({UserData , updateUserData , SiteData}) => {
                                         {user.access}
                                     </td>
                                     <td className="px-6 py-3 flex justify-center gap-3">
-                                        <button
+                                        {user.role === "Super Admin" && UserData.role === "Super Admin" ? <button
                                             onClick={() => handleOpenModal(user)}
                                             className="p-2 rounded-lg hover:bg-blue-50 text-blue-600"
                                         >
                                             <FileEdit />
-                                        </button>
-                                        <button
+                                        </button> : user.role !== "Super Admin" && <button
+                                            onClick={() => handleOpenModal(user)}
+                                            className="p-2 rounded-lg hover:bg-blue-50 text-blue-600"
+                                        >
+                                            <FileEdit />
+                                        </button>}
+
+                                        {user.role !== "Super Admin" && <button
                                             onClick={() => handleDelete(user._id)}
                                             className="p-2 rounded-lg hover:bg-red-50 text-red-600"
                                         >
                                             <Trash2 />
-                                        </button>
+                                        </button>}
+
                                     </td>
                                 </tr>
                             ))
@@ -480,7 +488,7 @@ const Users = ({UserData , updateUserData , SiteData}) => {
                                     required={!editUser}
                                 />
                                 <p className="text-xs text-gray-500 mt-1 italic">
-                                    Keep your password safe for future usage.
+                                    Keep your password safe , user will need to login.
                                 </p>
                             </div>
 

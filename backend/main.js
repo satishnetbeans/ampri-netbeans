@@ -1,4 +1,7 @@
 // @ts-nocheck
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 import express from "express";
 import path from "path";
@@ -6,7 +9,6 @@ import mime from "mime";
 import fs from "fs";
 
 import cors from "cors";
-import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/mongoose.config.js";
 
@@ -54,7 +56,7 @@ import NavbarLogosRouter from "./routes/common/NavbarLogos.routes.js";
 
 
 //models
-dotenv.config();
+
 const app = express();
 
 
